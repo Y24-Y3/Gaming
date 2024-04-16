@@ -1,8 +1,8 @@
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 
-public class GameApplication extends JPanel{
+public class GameApplication{
     public static void main(String[] args) {
-        GameWindow window = new GameWindow();
+        JFrame window = new GameWindow();
     }
     
 }
