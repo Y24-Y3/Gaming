@@ -13,6 +13,7 @@ public class SoundManager {
 
     private SoundManager(){
         clips = new HashMap<String, Clip>();
+        
     }
 
     public static SoundManager getInstance(){
