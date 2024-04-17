@@ -15,6 +15,7 @@ public class SoundManager {
     private SoundManager(){
         clips = new HashMap<String, Clip>();
 
+        // Level 1 Tentative sounds
         clip = loadClip("sounds//background//beginnning.WAV");
         clips.put("intro", clip);
 
@@ -68,6 +69,8 @@ public class SoundManager {
 
         clip = loadClip("sounds//transition//lvl2intro.WAV");
         clips.put("level2_intro", clip);
+
+        // ====================================================
     }
 
     public static SoundManager getInstance(){
