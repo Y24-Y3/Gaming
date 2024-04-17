@@ -3,16 +3,26 @@ import java.awt.event.*;
 import java.awt.*;
 
 
-public class GameWindow extends JFrame implements ActionListener{
+public class GameWindow extends JFrame implements ActionListener, KeyListener, MouseListener{
 
+    // labels
     private JLabel inventory, questItems, health, status, gamelevel;
-    private JPanel inventoryPanel, questItemsPanel, healthPanel, main, controls;
-    //private GamePanel gamePanel;
-
-
+    
+    // // text fields
+    // private JTextField statusTF, keyTF, mouseTF;
+    
+    // text areas
     private JTextArea inventoryText, questItemsText, levelText;
+
+    // scroll panes
     private JScrollPane inventoryScroll, questItemsScroll, healthScroll, statusScroll, levelScroll;
+
+    // buttons
     private JButton start, quit, pause, restart;
+    
+    // panels
+    private JPanel inventoryPanel, questItemsPanel, healthPanel, main, controls;
+    private GamePanel gamePanel;
     
     //private Keylisteners keylisteners;
     private Container c;
@@ -50,12 +60,18 @@ public class GameWindow extends JFrame implements ActionListener{
 
         
         controls = new JPanel();
+        controls.setBackground(Color.ORANGE);
         main = new JPanel();
+        main.setBackground(Color.RED);
 
         // Text Fields
         inventoryText = new JTextArea(10, 20);
         questItemsText = new JTextArea(10, 20);
         levelText = new JTextArea(10, 20);
+
+        inventoryText.setEditable(false);
+		questItemsText.setEditable(false);
+		levelText.setEditable(false);
 
         // buttons
         start = new JButton("Start Game");
@@ -78,12 +94,16 @@ public class GameWindow extends JFrame implements ActionListener{
         levelScroll = new JScrollPane(levelText);
 
         // Game Panel
-        //gamePanel = new GamePanel();
-        //gamePanel.setPreferredSize(new Dimension(1100, 950));
+        gamePanel = new GamePanel();
+        gamePanel.setPreferredSize(new Dimension(600, 500));
 
         //Main Panel
-        //main.add(gamePanel);
+        main.add(gamePanel);
         main.add(controls);
+
+        // msn must respond to keyboard and mouse
+        gamePanel.addMouseListener(this);
+		main.addKeyListener(this);
 
 
         // Container
@@ -97,18 +117,87 @@ public class GameWindow extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e){
+
         if(e.getSource() == start){
-            //gamePanel.startGame();
+            gamePanel.startGame();
         }
         if(e.getSource() == quit){
             System.exit(0);
         }
         if(e.getSource() == pause){
             //gamePanel.pauseGame();
+
+            // if (command.equals("Pause Game"))
+			// 	pauseB.setText ("Resume");
+			// else
+			// 	pauseB.setText ("Pause Game");
         }
         if(e.getSource() == restart){
             //gamePanel.restartGame();
         }
+
+        main.requestFocus();
     }
+    // implement methods in KeyListener interface
+
+	public void keyPressed(KeyEvent e) {
+
+        int keyCode = e.getKeyCode();
+
+		if (keyCode == KeyEvent.VK_LEFT) {
+			gamePanel.moveLeft();
+		}
+		else
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			gamePanel.moveRight();
+		}
+        else
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			gamePanel.jump();
+		}
+        // else
+		// if (e.getKeyCode() == KeyEvent.VK_UP) {
+		// 	gamePanel.moveUp();
+		// }
+        // else
+		// if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+		// 	gamePanel.moveDown();
+		// }
+		
+	}
+
+	public void keyReleased(KeyEvent e) {
+
+	}
+
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+
+	// implement methods in MouseListener interface
+
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+	}
+
+
+	public void mouseEntered(MouseEvent e) {
+	
+	}
+
+	public void mouseExited(MouseEvent e) {
+	
+	}
+
+	public void mousePressed(MouseEvent e) {
+	
+	}
+
+	public void mouseReleased(MouseEvent e) {
+	
+	}
+
     
 }
