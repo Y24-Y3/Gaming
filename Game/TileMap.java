@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.Iterator;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -266,6 +267,10 @@ public class TileMap {
 
     }
 
+    public void stopMoveLeft() {
+        player.move(-1);
+    }
+
 
     public void moveRight() {
 	int x, y;
@@ -279,6 +284,11 @@ public class TileMap {
 
     }
 
+    public void stopMoveRight() {
+        player.move(-2);
+    }
+
+
 
     public void jump() {
 	int x, y;
@@ -290,6 +300,10 @@ public class TileMap {
 
 	player.move(3);
 
+    }
+
+    public void stopJump() {
+        player.move(-3);
     }
 
 

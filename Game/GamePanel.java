@@ -1,6 +1,7 @@
 import javax.swing.JPanel;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.HashSet;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -238,10 +239,25 @@ public class GamePanel extends JPanel
 			tileMap.moveRight();
 	}
 
+	public void stopMoveLeft() {
+		if (!gameOver)
+			tileMap.stopMoveLeft();
+	}
+
+
+	public void stopMoveRight() {
+		if (!gameOver)
+			tileMap.stopMoveRight();
+	}
+
 
 	public void jump() {
 		if (!gameOver)
 			tileMap.jump();
+	}
+	public void stopJump() {
+		if (!gameOver)
+			tileMap.stopJump();
 	}
 
 	

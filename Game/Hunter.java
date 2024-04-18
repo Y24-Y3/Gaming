@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.Rectangle2D;
+import java.util.HashSet;
 
 public class Hunter implements Entity{
 
@@ -8,10 +9,13 @@ public class Hunter implements Entity{
     private static final int DY = 32;	// amount of Y pixels to move in one keystroke
     private static final int TILE_SIZE = 64;
 
+    public HashSet<Integer> directions;
+    int lastDirection;
+ 
 
     private JPanel panel;
     private int x, y, width, height, dx, dy;
-    private Image l2PlayerImage, l2PlayerLeftImage, l2PlayerRightImage;
+    private Image l2PlayerImage, l2PlayerLeftImage, l2PlayerRightImage, l2PlayerIdleRightImage, l2PlayerIdleLeftImage;
     private SoundManager soundManager;
     private Dimension d;
     private Color color;
@@ -31,6 +35,7 @@ public class Hunter implements Entity{
 
 
     public Hunter(JPanel panel, TileMap t, BackgroundManager b){
+        directions = new HashSet<>();
         this.panel = panel;
         tileMap = t;			// tile map on which the player's sprite is displayed
         bgManager = b;			// instance of BackgroundManager
@@ -38,9 +43,11 @@ public class Hunter implements Entity{
         goingUp = goingDown = false;
         inAir = false;
 
-        l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/playerLeft.gif");
-        l2PlayerRightImage = ImageManager.loadImage("Game/images/character/playerRight.gif");
-        l2PlayerImage = l2PlayerRightImage;
+        l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/walkLeft50x64.gif");
+        l2PlayerRightImage = ImageManager.loadImage("Game/images/character/walkRight50x64.gif");
+        l2PlayerIdleRightImage = ImageManager.loadImage("Game/images/character/idleRight50x64.gif");
+        l2PlayerIdleLeftImage = ImageManager.loadImage("Game/images/character/idleLeft50x64.gif");
+        l2PlayerImage = l2PlayerIdleRightImage;
         soundManager = SoundManager.getInstance();
     }
 
@@ -122,11 +129,19 @@ public class Hunter implements Entity{
 
         int newX = x;
         Point tilePos = null;
+
+        if(direction < 0){ //negative
+            int temp = direction * -1;
+            directions.remove(temp);
+        }else{
+            directions.add(direction);
+        }
   
         if (!panel.isVisible ()) return;
         
-        if (direction == 1) {		// move left
+        if (directions.contains(1)) {		// move left
             l2PlayerImage = l2PlayerLeftImage;
+            lastDirection = 1;
             newX = x - DX;
         if (newX < 0) {
           x = 0;
@@ -135,9 +150,10 @@ public class Hunter implements Entity{
           
         tilePos = collidesWithTile(newX, y);
         }	
-        else				
-        if (direction == 2) {		// move right
+        //else				
+        if (directions.contains(2) ) {		// move right
             l2PlayerImage = l2PlayerRightImage;
+            lastDirection = 2;
               int playerWidth = l2PlayerImage.getWidth(null);
             newX = x + DX;
   
@@ -150,38 +166,46 @@ public class Hunter implements Entity{
   
         tilePos = collidesWithTile(newX+playerWidth, y);			
         }
-        else				// jump
-        if (direction == 3 && !jumping) {	
+        //else				// jump
+        if (directions.contains(3) && !jumping && !goingDown) {	
             jump();
         return;
         }
-      
+        //else
+        if (!directions.contains(1) && !directions.contains(2) && lastDirection == 1){
+            l2PlayerImage = l2PlayerIdleLeftImage;
+        }
+        //else
+        if (!directions.contains(1) && !directions.contains(2) && lastDirection == 2){
+            l2PlayerImage = l2PlayerIdleRightImage;
+        }
+
         if (tilePos != null) {  
-           if (direction == 1) {
+           if (directions.contains(1) ) {
            System.out.println (": Collision going left");
                x = ((int) tilePos.getX() + 1) * TILE_SIZE;	   // keep flush with right side of tile
        }
            else
-           if (direction == 2) {
+           if (directions.contains(2)) {
            System.out.println (": Collision going right");
                  int playerWidth = l2PlayerImage.getWidth(null);
                x = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
        }
         }
         else {
-            if (direction == 1) {
+            if (directions.contains(1)) {
             x = newX;
             bgManager.moveLeft();
             }
         else
-        if (direction == 2) {
+        if (directions.contains(2)) {
             x = newX;
             bgManager.moveRight();
            }
   
             if (isInAir()) {
             System.out.println("In the air. Starting to fall.");
-            if (direction == 1) {				// make adjustment for falling on left side of tile
+            if (directions.contains(1)) {				// make adjustment for falling on left side of tile
                       int playerWidth = l2PlayerImage.getWidth(null);
             x = x - playerWidth + DX;
             }

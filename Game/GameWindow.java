@@ -168,6 +168,20 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 
 	public void keyReleased(KeyEvent e) {
 
+        int keyCode = e.getKeyCode();
+
+		if (keyCode == KeyEvent.VK_LEFT) {
+			gamePanel.stopMoveLeft();
+		}
+		else
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			gamePanel.stopMoveRight();
+		}
+        else
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			gamePanel.stopJump();
+		}
+
 	}
 
 	public void keyTyped(KeyEvent e) {
