@@ -34,6 +34,7 @@ public class Hunter implements Entity{
     private int startAir;
 
 
+
     public Hunter(JPanel panel, TileMap t, BackgroundManager b){
         directions = new HashSet<>();
         this.panel = panel;
@@ -49,6 +50,8 @@ public class Hunter implements Entity{
         l2PlayerIdleLeftImage = ImageManager.loadImage("Game/images/character/idleLeft50x64.gif");
         l2PlayerImage = l2PlayerIdleRightImage;
         soundManager = SoundManager.getInstance();
+
+
     }
 
     public Point collidesWithTile(int newX, int newY) {
