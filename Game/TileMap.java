@@ -17,7 +17,7 @@ import java.awt.geom.Rectangle2D;
 
 public class TileMap {
 
-    private static final int TILE_SIZE = 64;
+    private static final int TILE_SIZE = 32;
     private static final int TILE_SIZE_BITS = 6;
 
     private Image[][] tiles;
@@ -72,7 +72,7 @@ public class TileMap {
 	x = (dimension.width / 2) + TILE_SIZE;		// position player in middle of screen
 
 	//x = 1000;					// position player in 'random' location
-	y = dimension.height - (TILE_SIZE + playerHeight);
+	y = dimension.height - (TILE_SIZE*2 + playerHeight);
 
         player.setX(x);
         player.setY(y);
@@ -255,7 +255,7 @@ public class TileMap {
     }
 
 
-    public void moveLeft() {
+    public void moveLeft(boolean[] directions) {
 	int x, y;
 	x = player.getX();
 	y = player.getY();
@@ -263,16 +263,18 @@ public class TileMap {
 	String mess = "Going left. x = " + x + " y = " + y;
 	System.out.println(mess);
 
-	player.move(1);
+	player.move(directions);
 
     }
 
-    public void stopMoveLeft() {
-        player.move(-1);
+    public void stopMoveLeft(boolean[] directions) {
+        player.move(directions);
+        System.out.println("stoped going left");
+
     }
 
 
-    public void moveRight() {
+    public void moveRight(boolean[] directions) {
 	int x, y;
 	x = player.getX();
 	y = player.getY();
@@ -280,17 +282,18 @@ public class TileMap {
 	String mess = "Going right. x = " + x + " y = " + y;
 	System.out.println(mess);
 
-	player.move(2);
+	player.move(directions);
 
     }
 
-    public void stopMoveRight() {
-        player.move(-2);
+    public void stopMoveRight(boolean[] directions) {
+        player.move(directions);
+        System.out.println("stoped going right");
     }
 
 
 
-    public void jump() {
+    public void jump(boolean[] directions) {
 	int x, y;
 	x = player.getX();
 	y = player.getY();
@@ -298,12 +301,14 @@ public class TileMap {
 	String mess = "Jumping. x = " + x + " y = " + y;
 	System.out.println(mess);
 
-	player.move(3);
+	player.move(directions);
 
     }
 
-    public void stopJump() {
-        player.move(-3);
+    public void stopJump(boolean[] directions) {
+
+        player.move(directions);
+        System.out.println("stoped jumping");
     }
 
 
