@@ -12,8 +12,7 @@ import java.awt.geom.Rectangle2D;
    A component that displays all the game entities
 */
 
-public class GamePanel extends JPanel
-		       implements Runnable {
+public class GamePanel extends JPanel implements Runnable {
 
 	private SoundManager soundManager;
 
@@ -26,8 +25,8 @@ public class GamePanel extends JPanel
  	private Image backgroundImage;
 
 	// private BirdAnimation animation;
-	private volatile boolean isAnimShown;
-	private volatile boolean isAnimPaused;
+	//private volatile boolean isAnimShown;
+	//private volatile boolean isAnimPaused;
 
 	// private ImageEffect imageEffect;		// sprite demonstrating an image effect
 
@@ -42,8 +41,7 @@ public class GamePanel extends JPanel
 
 		isRunning = false;
 		isPaused = false;
-		isAnimShown = false;
-		isAnimPaused = false;
+
 
 		soundManager = SoundManager.getInstance();
 
@@ -55,8 +53,6 @@ public class GamePanel extends JPanel
 
 
 	public void createGameEntities() {
-		// animation = new BirdAnimation();
-		// imageEffect = new ImageEffect (this);
 	}
 
 
@@ -106,11 +102,6 @@ public class GamePanel extends JPanel
 			return;
 				
 		}
-
-		if (!isPaused && isAnimShown){
-			// animation.update();
-        }
-		// imageEffect.update();
 	}
 
 
@@ -121,11 +112,6 @@ public class GamePanel extends JPanel
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		tileMap.draw (imageContext);
-
-		if (isAnimShown){
-			// animation.draw(imageContext);		// draw the animation
-        }
-		//imageEffect.draw(imageContext);			// draw the image effect
 
 		if (gameOver) {
 			Color darken = new Color (0, 0, 0, 125);
@@ -143,7 +129,7 @@ public class GamePanel extends JPanel
 	public void startGame() {				// initialise and start the game thread 
 
 		if (gameThread == null) {
-			//soundManager.playSound ("background", true);
+			soundManager.playClip("background", true);
 
 			gameOver = false;
 
@@ -211,20 +197,13 @@ public class GamePanel extends JPanel
 				isPaused = false;
 			else
 				isPaused = true;
-
-			if (isAnimShown) {
-				// if (isPaused)
-				// 	animation.stopSound();
-				// else
-				// 	animation.playSound();
-			}
 		}
 	}
 
 
 	public void endGame() {					// end the game thread
 		isRunning = false;
-		//soundManager.stopClip ("background");
+		soundManager.stopClip("background");
 	}
 
 	
@@ -259,14 +238,6 @@ public class GamePanel extends JPanel
 		if (!gameOver)
 			tileMap.stopJump();
 	}
-
-	
-	// public void showAnimation() {
-	// 	isAnimShown = true;
-	// 	animation.start();
-		
-	// }
-
 
 	public void endLevel() {
 		level = level + 1;

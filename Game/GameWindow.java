@@ -3,25 +3,22 @@ import java.awt.event.*;
 import java.awt.*;
 
 
-public class GameWindow extends JFrame implements ActionListener, KeyListener, MouseListener{
+public class GameWindow extends JFrame implements ActionListener, KeyListener{
 
     // labels
-    private JLabel inventory, questItems, health, status, gamelevel;
-    
-    // // text fields
-    // private JTextField statusTF, keyTF, mouseTF;
-    
+    private JLabel questItems, health, status, gamelevel;
+
     // text areas
-    private JTextArea inventoryText, questItemsText, levelText;
+    private JTextArea questItemsText, levelText;
 
     // scroll panes
-    private JScrollPane inventoryScroll, questItemsScroll, healthScroll, statusScroll, levelScroll;
+    //private JScrollPane inventoryScroll, questItemsScroll, healthScroll, statusScroll, levelScroll;
 
     // buttons
     private JButton start, quit, pause, restart;
     
     // panels
-    private JPanel inventoryPanel, questItemsPanel, healthPanel, main, controls;
+    private JPanel questItemsPanel, healthPanel, main, controls;
     private GamePanel gamePanel;
     
     //private Keylisteners keylisteners;
@@ -35,17 +32,10 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         setLocation(200, 0);
 
         // User Interface Components
-        inventory = new JLabel("Inventory");
         questItems = new JLabel("Quest Items");
         health = new JLabel("Health");
         status = new JLabel("Status");
         gamelevel = new JLabel("Game-Level");
-
-        // Panel Fields
-        inventoryPanel = new JPanel();
-        inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
-        inventoryPanel.add(inventory);
-        //inventoryPanel.add(inventoryScroll);
 
 
         questItemsPanel = new JPanel();
@@ -65,11 +55,9 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         main.setBackground(Color.RED);
 
         // Text Fields
-        inventoryText = new JTextArea(10, 20);
         questItemsText = new JTextArea(10, 20);
         levelText = new JTextArea(10, 20);
 
-        inventoryText.setEditable(false);
 		questItemsText.setEditable(false);
 		levelText.setEditable(false);
 
@@ -89,20 +77,18 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         controls.add(restart);
 
         // Scroll Panes
-        inventoryScroll = new JScrollPane(inventoryText);
-        questItemsScroll = new JScrollPane(questItemsText);
-        levelScroll = new JScrollPane(levelText);
+        //questItemsScroll = new JScrollPane(questItemsText);
+        //levelScroll = new JScrollPane(levelText);
 
         // Game Panel
         gamePanel = new GamePanel();
-        gamePanel.setPreferredSize(new Dimension(600, 500));
+        gamePanel.setPreferredSize(new Dimension(1150, 780));
 
         //Main Panel
         main.add(gamePanel);
         main.add(controls);
 
         // msn must respond to keyboard and mouse
-        gamePanel.addMouseListener(this);
 		main.addKeyListener(this);
 
 
@@ -185,33 +171,6 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 	}
 
 	public void keyTyped(KeyEvent e) {
-
 	}
-
-
-	// implement methods in MouseListener interface
-
-	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-	}
-
-
-	public void mouseEntered(MouseEvent e) {
-	
-	}
-
-	public void mouseExited(MouseEvent e) {
-	
-	}
-
-	public void mousePressed(MouseEvent e) {
-	
-	}
-
-	public void mouseReleased(MouseEvent e) {
-	
-	}
-
     
 }
