@@ -6,10 +6,10 @@ import java.util.HashSet;
 public class Hunter implements Entity{
 
     private static final int DX = 8;	// amount of X pixels to move in one keystroke
-    private static final int DY = 32;	// amount of Y pixels to move in one keystroke
-    private static final int TILE_SIZE = 64;
+    private static final int DY = 16;	// amount of Y pixels to move in one keystroke
+    private static final int TILE_SIZE = 32;
 
-    public HashSet<Integer> directions;
+    //public HashSet<Integer> directions;
     int lastDirection;
  
 
@@ -36,7 +36,7 @@ public class Hunter implements Entity{
 
 
     public Hunter(JPanel panel, TileMap t, BackgroundManager b){
-        directions = new HashSet<>();
+        //directions = new HashSet<>();
         this.panel = panel;
         tileMap = t;			// tile map on which the player's sprite is displayed
         bgManager = b;			// instance of BackgroundManager
@@ -128,21 +128,14 @@ public class Hunter implements Entity{
         return null;
     }
 
-    public synchronized void move (int direction) {
+    public synchronized void move (boolean[] directions) {
 
         int newX = x;
         Point tilePos = null;
-
-        if(direction < 0){ //negative
-            int temp = direction * -1;
-            directions.remove(temp);
-        }else{
-            directions.add(direction);
-        }
   
         if (!panel.isVisible ()) return;
         
-        if (directions.contains(1)) {		// move left
+        if (directions[1] == true) {		// move left
             l2PlayerImage = l2PlayerLeftImage;
             lastDirection = 1;
             newX = x - DX;
@@ -154,7 +147,7 @@ public class Hunter implements Entity{
         tilePos = collidesWithTile(newX, y);
         }	
         //else				
-        if (directions.contains(2) ) {		// move right
+        if (directions[2] == true) {		// move right
             l2PlayerImage = l2PlayerRightImage;
             lastDirection = 2;
               int playerWidth = l2PlayerImage.getWidth(null);
@@ -170,47 +163,47 @@ public class Hunter implements Entity{
         tilePos = collidesWithTile(newX+playerWidth, y);			
         }
         //else				// jump
-        if (directions.contains(3) && !jumping && !goingDown) {	
+        if (directions[3] && !jumping && !goingDown) {	
             jump();
         return;
         }
         //else
-        if (!directions.contains(1) && !directions.contains(2) && lastDirection == 1){
+        if (!directions[1] && !directions[2] && lastDirection == 1){
             l2PlayerImage = l2PlayerIdleLeftImage;
         }
         //else
-        if (!directions.contains(1) && !directions.contains(2) && lastDirection == 2){
+        if (!directions[1] && !directions[2] && lastDirection == 2){
             l2PlayerImage = l2PlayerIdleRightImage;
         }
 
         if (tilePos != null) {  
-           if (directions.contains(1) ) {
+           if (directions[1]) {
            System.out.println (": Collision going left");
                x = ((int) tilePos.getX() + 1) * TILE_SIZE;	   // keep flush with right side of tile
        }
            else
-           if (directions.contains(2)) {
+           if (directions[2]) {
            System.out.println (": Collision going right");
                  int playerWidth = l2PlayerImage.getWidth(null);
                x = ((int) tilePos.getX()) * TILE_SIZE - playerWidth; // keep flush with left side of tile
        }
         }
         else {
-            if (directions.contains(1)) {
+            if (directions[1] == true) {
             x = newX;
             bgManager.moveLeft();
             }
         else
-        if (directions.contains(2)) {
+        if (directions[2] == true) {
             x = newX;
             bgManager.moveRight();
            }
   
             if (isInAir()) {
             System.out.println("In the air. Starting to fall.");
-            if (directions.contains(1)) {				// make adjustment for falling on left side of tile
+            if (directions[1] == true) {				// make adjustment for falling on left side of tile
                       int playerWidth = l2PlayerImage.getWidth(null);
-            x = x - playerWidth + DX;
+                      x = x + DX;//x = x - playerWidth + DX;
             }
             fall();
             }
@@ -220,11 +213,13 @@ public class Hunter implements Entity{
      public boolean isInAir() {
 
         int playerHeight;
+        int playerWidth;
         Point tilePos;
   
         if (!jumping && !inAir) {   
         playerHeight = l2PlayerImage.getHeight(null);
-        tilePos = collidesWithTile(x, y + playerHeight + 1); 	// check below player to see if there is a tile
+        playerWidth = l2PlayerImage.getWidth(null);
+        tilePos = collidesWithTile(x + playerWidth, y + playerHeight + 1); 	// check below player to see if there is a tile
       
           if (tilePos == null)				   	// there is no tile below player, so player is in the air
           return true;

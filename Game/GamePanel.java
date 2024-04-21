@@ -16,6 +16,7 @@ public class GamePanel extends JPanel
 		       implements Runnable {
 
 	private SoundManager soundManager;
+	boolean[] directions = {false, false, false, false};
 
 	private boolean isRunning;
 	private boolean isPaused;
@@ -26,6 +27,7 @@ public class GamePanel extends JPanel
  	private Image backgroundImage;
 
 	// private BirdAnimation animation;
+	//private StripAnimation animation;
 	private volatile boolean isAnimShown;
 	private volatile boolean isAnimPaused;
 
@@ -45,6 +47,7 @@ public class GamePanel extends JPanel
 		isAnimShown = false;
 		isAnimPaused = false;
 
+
 		soundManager = SoundManager.getInstance();
 
 		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
@@ -55,7 +58,7 @@ public class GamePanel extends JPanel
 
 
 	public void createGameEntities() {
-		// animation = new BirdAnimation();
+		//animation = new StripAnimation();
 		// imageEffect = new ImageEffect (this);
 	}
 
@@ -76,6 +79,7 @@ public class GamePanel extends JPanel
 
 	public void gameUpdate() {
 
+		tileMap.moveLeft(directions);
 		tileMap.update();
 
 		if (levelChange) {
@@ -107,6 +111,7 @@ public class GamePanel extends JPanel
 				
 		}
 
+		//animation.update();
 		if (!isPaused && isAnimShown){
 			// animation.update();
         }
@@ -122,6 +127,7 @@ public class GamePanel extends JPanel
 
 		tileMap.draw (imageContext);
 
+		//animation.draw(imageContext);
 		if (isAnimShown){
 			// animation.draw(imageContext);		// draw the animation
         }
@@ -228,36 +234,36 @@ public class GamePanel extends JPanel
 	}
 
 	
-	public void moveLeft() {
+	public void moveLeft(boolean[] directions) {
 		if (!gameOver)
-			tileMap.moveLeft();
+			tileMap.moveLeft(directions);
 	}
 
 
-	public void moveRight() {
+	public void moveRight(boolean[] directions) {
 		if (!gameOver)
-			tileMap.moveRight();
+			tileMap.moveRight(directions);
 	}
 
-	public void stopMoveLeft() {
+	public void stopMoveLeft(boolean[] directions) {
 		if (!gameOver)
-			tileMap.stopMoveLeft();
-	}
-
-
-	public void stopMoveRight() {
-		if (!gameOver)
-			tileMap.stopMoveRight();
+			tileMap.stopMoveLeft(directions);
 	}
 
 
-	public void jump() {
+	public void stopMoveRight(boolean[] directions) {
 		if (!gameOver)
-			tileMap.jump();
+			tileMap.stopMoveRight(directions);
 	}
-	public void stopJump() {
+
+
+	public void jump(boolean[] directions) {
 		if (!gameOver)
-			tileMap.stopJump();
+			tileMap.jump(directions);
+	}
+	public void stopJump(boolean[] directions) {
+		if (!gameOver)
+			tileMap.stopJump(directions);
 	}
 
 	
@@ -271,6 +277,11 @@ public class GamePanel extends JPanel
 	public void endLevel() {
 		level = level + 1;
 		levelChange = true;
+	}
+
+	public void setDirections(boolean[] directions) {
+		if(directions[1] && directions[2]){ directions[1] = false;} // prioritize goinf right over left to avoid bad movement
+		this.directions = directions;
 	}
 
 }

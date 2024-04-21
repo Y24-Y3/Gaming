@@ -1,9 +1,14 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.HashSet;
 import java.awt.*;
 
 
 public class GameWindow extends JFrame implements ActionListener, KeyListener, MouseListener{
+
+    //
+    //public HashSet<Integer> directions;
+    public boolean[] directions = {false, false, false, false};;
 
     // labels
     private JLabel inventory, questItems, health, status, gamelevel;
@@ -33,6 +38,8 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         setSize(1200, 820);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(200, 0);
+
+        //directions = new HashSet<>();
 
         // User Interface Components
         inventory = new JLabel("Inventory");
@@ -145,15 +152,18 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         int keyCode = e.getKeyCode();
 
 		if (keyCode == KeyEvent.VK_LEFT) {
-			gamePanel.moveLeft();
+            directions[1] = true;
+			gamePanel.setDirections(directions);
 		}
-		else
+		//else
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			gamePanel.moveRight();
+            directions[2] = true;;
+			gamePanel.setDirections(directions);
 		}
-        else
+        //else
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			gamePanel.jump();
+            directions[3] = true;
+			gamePanel.setDirections(directions);
 		}
         // else
 		// if (e.getKeyCode() == KeyEvent.VK_UP) {
@@ -171,15 +181,18 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         int keyCode = e.getKeyCode();
 
 		if (keyCode == KeyEvent.VK_LEFT) {
-			gamePanel.stopMoveLeft();
+            directions[1] = false;
+			gamePanel.setDirections(directions);
 		}
-		else
+		//else
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			gamePanel.stopMoveRight();
+            directions[2] = false;
+			gamePanel.setDirections(directions);
 		}
-        else
+        //else
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			gamePanel.stopJump();
+            directions[3] = false;
+			gamePanel.setDirections(directions);
 		}
 
 	}

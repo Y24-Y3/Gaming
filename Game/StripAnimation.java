@@ -72,7 +72,7 @@ public class StripAnimation {
 		if (!animation.isStillActive())
 			return;
 
-		g2.drawImage(animation.getImage(), x, y, 100, 100, null);
+		g2.drawImage(animation.getImage(), x, y, 100, 400, null);
 	}
 
 }
