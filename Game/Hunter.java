@@ -73,8 +73,8 @@ public class Hunter implements Entity{
     public Point collidesWithTileDown (int newX, int newY) {
 
         int playerWidth = l2PlayerImage.getWidth(null);
-              int playerHeight = l2PlayerImage.getHeight(null);
-              int offsetY = tileMap.getOffsetY();
+        int playerHeight = l2PlayerImage.getHeight(null);
+        int offsetY = tileMap.getOffsetY();
         int xTile = tileMap.pixelsToTiles(newX);
         int yTileFrom = tileMap.pixelsToTiles(y - offsetY);
         int yTileTo = tileMap.pixelsToTiles(newY - offsetY + playerHeight);

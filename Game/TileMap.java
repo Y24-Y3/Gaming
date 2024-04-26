@@ -23,7 +23,7 @@ public class TileMap {
     private Image[][] tiles;
     private int screenWidth, screenHeight;
     private int mapWidth, mapHeight;
-    private int offsetY;
+    //private int offsetY;
 
     private LinkedList sprites;
     private Hunter player;
@@ -46,20 +46,22 @@ public class TileMap {
 	screenWidth = dimension.width;
 	screenHeight = dimension.height;
 
+    System.out.println("Dimension: " + dimension);
 	System.out.println ("Width: " + screenWidth);
 	System.out.println ("Height: " + screenHeight);
 
 	mapWidth = width;
 	mapHeight = height;
 
+
         // get the y offset to draw all sprites and tiles
 
-       	offsetY = screenHeight - tilesToPixels(mapHeight);
-	System.out.println("offsetY: " + offsetY);
+    offsetY = screenHeight - tilesToPixels(mapHeight);
+	//System.out.println("offsetY: " + offsetY);
 
 	bgManager = new BackgroundManager (panel, 12);
 
-        tiles = new Image[mapWidth][mapHeight];
+    tiles = new Image[mapWidth][mapHeight];
 	player = new Hunter (panel, this, bgManager);
 	heart = new Heart (panel, player);
 		
@@ -181,7 +183,7 @@ public class TileMap {
         // based on player's position
 
         int offsetX = screenWidth / 2 -
-            Math.round(player.getX()) - TILE_SIZE;
+        Math.round(player.getX()) - TILE_SIZE;
         offsetX = Math.min(offsetX, 0);
         offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
 
@@ -196,7 +198,7 @@ public class TileMap {
 */
 	// draw the background first
 
-	bgManager.draw (g2);
+	    //bgManager.draw (g2);
 
 	//Draw white background (for screen capture)
 /*

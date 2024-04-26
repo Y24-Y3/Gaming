@@ -12,11 +12,11 @@ import java.awt.geom.Rectangle2D;
    A component that displays all the game entities
 */
 
-public class GamePanel extends JPanel
-		       implements Runnable {
+public class GamePanel extends JPanel implements Runnable {
 
 	private SoundManager soundManager;
 	boolean[] directions = {false, false, false, false};
+	private final int FPS = 60;
 
 	private boolean isRunning;
 	private boolean isPaused;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel
 
 		soundManager = SoundManager.getInstance();
 
-		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage (1200, 700, BufferedImage.TYPE_INT_RGB);
 
 		level = 1;
 		levelChange = false;
@@ -63,18 +63,38 @@ public class GamePanel extends JPanel
 	}
 
 
-	public void run () {
-		try {
-			isRunning = true;
-			while (isRunning) {
-				if (!isPaused && !gameOver)
-					gameUpdate();
-				gameRender();
-				Thread.sleep (50);	
+	public void run() {
+		double drawInterval = 1000000000 / FPS;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		long timer = 0;
+		int frames = 0;
+	
+		isRunning = true;
+		while (isRunning) {
+			currentTime = System.nanoTime();
+			delta += (currentTime - lastTime) / drawInterval;
+			timer += (currentTime - lastTime);
+			lastTime = currentTime;
+
+			if (delta >= 1) {
+				if (!isPaused && !gameOver) {
+					gameUpdate(); // Assuming gameUpdate() is equivalent to the update() method in RPG
+				}
+				gameRender(); // Assuming gameRender() is equivalent to the repaint() method in RPG
+				delta--;
+				frames++;
+			}
+
+			if (timer >= 1000000000) {
+				System.out.println("FPS: " + frames);
+				frames = 0;
+				timer = 0;
 			}
 		}
-		catch(InterruptedException e) {}
 	}
+	
 
 
 	public void gameUpdate() {
@@ -87,7 +107,7 @@ public class GamePanel extends JPanel
 			tileManager = new TileMapManager (this);
 
 			try {
-				String filename = "Game/maps/map" + level + ".txt";
+				String filename = "Game/maps/map4" + level + ".txt";
 				tileMap = tileManager.loadMap(filename) ;
 				int w, h;
 				w = tileMap.getWidth();
@@ -156,7 +176,7 @@ public class GamePanel extends JPanel
 			tileManager = new TileMapManager (this);
 
 			try {
-				tileMap = tileManager.loadMap("Game/maps/map1.txt");
+				tileMap = tileManager.loadMap("Game/maps/map4.txt");
 				int w, h;
 				w = tileMap.getWidth();
 				h = tileMap.getHeight();
@@ -190,7 +210,7 @@ public class GamePanel extends JPanel
 			tileManager = new TileMapManager (this);
 
 			try {
-				tileMap = tileManager.loadMap("Game/maps/map1.txt");
+				tileMap = tileManager.loadMap("Game/maps/map4.txt");
 				int w, h;
 				w = tileMap.getWidth();
 				h = tileMap.getHeight();

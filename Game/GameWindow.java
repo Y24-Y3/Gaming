@@ -102,7 +102,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 
         // Game Panel
         gamePanel = new GamePanel();
-        gamePanel.setPreferredSize(new Dimension(600, 500));
+        gamePanel.setPreferredSize(new Dimension(1200, 700));
 
         //Main Panel
         main.add(gamePanel);

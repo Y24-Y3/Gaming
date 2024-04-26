@@ -15,6 +15,8 @@ public class TileMapManager {
 
     private ArrayList<Image> tiles;
     private int currentMap = 0;
+    int mapWidth = 0;
+    int mapHeight = 0;
 
     private GamePanel panel;
 
@@ -34,75 +36,56 @@ public class TileMapManager {
 
         loadTileImages();
 
+        mapHeight = panel.getHeight();
+        mapWidth = panel.getWidth();
+        
+
         //loadCreatureSprites();
         //loadPowerUpSprites();
     }
 
 
-     public TileMap loadMap(String filename)
-        throws IOException
-    {
-        ArrayList<String> lines = new ArrayList<String>();
-        int mapWidth = 0;
-        int mapHeight = 0;
+    public TileMap loadMap(String filename) throws IOException {
+        ArrayList<String> lines = new ArrayList<>();
 
-        // read every line in the text file into the list
-
-        BufferedReader reader = new BufferedReader(
-            new FileReader(filename));
-        while (true) {
-            String line = reader.readLine();
-            // no more lines to read
-            if (line == null) {
-                reader.close();
-                break;
-            }
-
-            // add every line except for comments
-            if (!line.startsWith("#")) {
-                lines.add(line);
-                mapWidth = Math.max(mapWidth, line.length());
+        // Use try-with-resources to ensure BufferedReader is closed automatically
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Skip comments
+                if (!line.startsWith("#")) {
+                    lines.add(line);
+                    mapWidth = Math.max(mapWidth, line.length());
+                }
             }
         }
-
-        // parse the lines to create a TileMap
+    
+        // Parse the lines to create a TileMap
         mapHeight = lines.size();
 
-        TileMap newMap = new TileMap(panel, mapWidth, mapHeight);
-        for (int y=0; y<mapHeight; y++) {
-            String line = lines.get(y);
-            for (int x=0; x<line.length(); x++) {
-                char ch = line.charAt(x);
 
-                // check if the char represents tile A, B, C etc.
+        TileMap newMap = new TileMap(panel, mapWidth, mapHeight);
+
+        System.out.println("Map Width: " + mapWidth);
+        System.out.println("Map Height: " + mapHeight);
+
+        for (int y = 0; y < mapHeight; y++) {
+            String line = lines.get(y);
+            for (int x = 0; x < line.length(); x++) {
+                char ch = line.charAt(x);
+    
+                // Check if the char represents tile A, B, C, etc.
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
                     newMap.setTile(x, y, tiles.get(tile));
                 }
-/*
-                // check if the char represents a sprite
-                else if (ch == 'o') {
-                    addSprite(newMap, coinSprite, x, y);
-                }
-                else if (ch == '!') {
-                    addSprite(newMap, musicSprite, x, y);
-                }
-                else if (ch == '*') {
-                    addSprite(newMap, goalSprite, x, y);
-                }
-                else if (ch == '1') {
-                    addSprite(newMap, grubSprite, x, y);
-                }
-                else if (ch == '2') {
-                    addSprite(newMap, flySprite, x, y);
-                }
-*/
+                // Additional logic for sprites can be added here
             }
         }
-
+    
         return newMap;
     }
-
+    
 
 /*
     private void addSprite(TileMap map,
@@ -146,7 +129,7 @@ public class TileMapManager {
         tiles = new ArrayList<Image>();
         char ch = 'A';
         while (true) {
-            String filename = "Game/images/tiles/tile_" + ch + ".png";
+            String filename = "Game/images/tile/tile_" + ch + ".png";
 	    file = new File(filename);
             if (!file.exists()) {
 		System.out.println("Image file could not be opened: " + filename);
