@@ -2,6 +2,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Ramm implements Enemy{
 
@@ -15,7 +17,9 @@ public class Ramm implements Enemy{
 	private int dx;
     private int originalX;
 
+	private LinkedList arrows;
 	private Hunter player;
+	private TileMap map;
 
 	private Image spriteImage;			// image for sprite
 	private Image spriteLeftImage;
@@ -27,22 +31,25 @@ public class Ramm implements Enemy{
 	boolean originalImage, grayImage;
 
 	int count;
+	int count2;
 
 
-	public Ramm (Hunter player) {  
+	public Ramm (TileMap map) {  
         
 		// x = 4128;
 		// y = 270;
 		dx = 0;
         originalX = x;
 
-		this.player = player;
+		this.map = map;
+		this.player = map.getPlayer();
 
 		time = 0;				// range is 0 to 10
 		timeChange = 1;				// set to 1
 		originalImage = true;
 		grayImage = false;
 		count = 0;
+		arrows = new LinkedList();
 
 		spriteLeftImage = ImageManager.loadImage("Game/images/ramm/rammShootLeft100.gif");
 		spriteRightImage = ImageManager.loadImage("Game/images/ramm/rammShootRight100.gif");
@@ -83,6 +90,34 @@ public class Ramm implements Enemy{
 			spriteImage = spriteRightImage;
 		}
 
+		count++;
+		count2++;
+
+		if(count == 22){
+			//shoot
+			shoot();
+		}
+
+		if(count% 28 == 0){
+			//reset
+			count = 0;
+			// count2 = 0;
+		}
+
+		// if(count2 == 12){
+		// 	//shoot
+		// 	shoot();
+		// }
+
+		Iterator i = arrows.iterator();
+        while (i.hasNext()) {
+            RammArrow arrow = (RammArrow)i.next();
+			if(!arrow.fired()){
+				arrows.remove(arrow);
+			}
+		}
+		//map.setArrowSprites(arrows);
+
 	
 		// boolean shooting;
 		// if (shooting){
@@ -96,7 +131,21 @@ public class Ramm implements Enemy{
         
     }
 
-   	public int getX() {
+   	private void shoot() {
+		//pow pow pow
+		int x = 0;
+		if(spriteImage == spriteLeftImage)
+			x = 1;
+			
+		if(spriteImage == spriteRightImage)
+			x = 2;
+
+		RammArrow temp = new RammArrow(map, x, this.getX(), this.getY());
+		arrows.add(temp);
+	}
+
+
+	public int getX() {
       		return x;
    	}
 
@@ -145,8 +194,11 @@ public class Ramm implements Enemy{
 
     @Override
     public void wakeUp() {
-        dx = 2;
         return;
     };
+
+	public LinkedList getArrows(){
+		return arrows;
+	}
 
 }

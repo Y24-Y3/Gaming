@@ -80,7 +80,7 @@ public class TileMapManager {
                 if (tile >= 0 && tile < tiles.size()) {
                     newMap.setTile(x, y, tiles.get(tile));
                 }else if (ch == 'o') {
-                    Ramm temp = new Ramm(newMap.getPlayer());
+                    Ramm temp = new Ramm(newMap);
                     addSprite(newMap, temp, x, y);
                 }
             // }

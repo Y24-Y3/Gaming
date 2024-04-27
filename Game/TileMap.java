@@ -26,6 +26,8 @@ public class TileMap {
     private int offsetY;
 
     private LinkedList sprites;
+    private LinkedList arrows;
+    private LinkedList arrows2;
     private Hunter player;
     private Heart heart;
 
@@ -70,6 +72,8 @@ public class TileMap {
 	heart = new Heart (panel, player);
 		
         sprites = new LinkedList();
+        arrows = new LinkedList();
+        arrows2 = new LinkedList();
 
 	Image playerImage = player.getImage();
 	int playerHeight = playerImage.getHeight(null);
@@ -268,6 +272,17 @@ public class TileMap {
             }
         }
 
+        // draw arrow sprites
+        arrows = arrows2;
+        Iterator i2 = arrows.iterator();
+        while (i2.hasNext()) {
+            RammArrow sprite = (RammArrow)i2.next();
+            int x = Math.round(sprite.getX()) + offsetX;
+            int y = Math.round(sprite.getY()) + offsetY;
+            // Draw the arrow
+            g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 35, null);
+        }
+
 
     }
 
@@ -343,9 +358,23 @@ public class TileMap {
 		panel.endLevel();
 	}
 
+    arrows2.clear();
+
     Iterator i = getSprites();
         while (i.hasNext()) {
             Enemy sprite = (Enemy)i.next();
+            sprite.update();
+
+            if(sprite instanceof Ramm)
+                arrows2.addAll(((Ramm)sprite).getArrows());
+        }
+    
+    arrows = arrows2;
+    // arrows2.clear();
+    // arrows2.add
+    Iterator i2 = arrows.iterator();
+        while (i2.hasNext()) {
+            RammArrow sprite = (RammArrow)i2.next();
             sprite.update();
         }
 
