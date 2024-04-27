@@ -29,6 +29,9 @@ public class TileMap {
     private Hunter player;
     private Heart heart;
 
+    private boolean boss;
+    private int lastOffsetX;
+
     BackgroundManager bgManager;
 
     private GamePanel panel;
@@ -42,6 +45,9 @@ public class TileMap {
 
 	this.panel = panel;
 	dimension = panel.getSize();
+
+    boss = false;
+    lastOffsetX = 0;
 
 	screenWidth = dimension.width;
 	screenHeight = dimension.height;
@@ -72,7 +78,7 @@ public class TileMap {
 	x = (dimension.width / 2) + TILE_SIZE;		// position player in middle of screen
 
 	//x = 1000;					// position player in 'random' location
-	y = dimension.height - (TILE_SIZE*2 + playerHeight);
+	y = dimension.height - (TILE_SIZE*4 + playerHeight);
 
         player.setX(x);
         player.setY(y);
@@ -179,11 +185,21 @@ public class TileMap {
 
         // get the scrolling position of the map
         // based on player's position
+        if(player.getX() >= 11578)
+            boss = true;
 
-        int offsetX = screenWidth / 2 -
+        int offsetX;
+
+        if(boss){
+            offsetX = lastOffsetX;
+        }else{
+            offsetX = screenWidth / 2 -
             Math.round(player.getX()) - TILE_SIZE;
-        offsetX = Math.min(offsetX, 0);
-        offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
+            offsetX = Math.min(offsetX, 0);
+            offsetX = Math.max(offsetX, screenWidth - mapWidthPixels);
+            lastOffsetX = offsetX;
+        }
+        
 
 /*
         // draw black background, if needed
@@ -234,23 +250,24 @@ public class TileMap {
             Math.round(heart.getY()), 40, 40, //+ offsetY, 50, 50,
             null);
 
-/*
+
         // draw sprites
-        Iterator i = map.getSprites();
+        Iterator i = getSprites();
         while (i.hasNext()) {
-            Sprite sprite = (Sprite)i.next();
+            Enemy sprite = (Enemy)i.next();
             int x = Math.round(sprite.getX()) + offsetX;
             int y = Math.round(sprite.getY()) + offsetY;
-            g.drawImage(sprite.getImage(), x, y, null);
+            if (sprite instanceof Ramm) {
+                // If sprite is an instance of the Ramm class
+                g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 5, null);
+            }
 
             // wake up the creature when it's on screen
-            if (sprite instanceof Creature &&
-                x >= 0 && x < screenWidth)
-            {
-                ((Creature)sprite).wakeUp();
+            if (x >= 0 && x < screenWidth){
+                ((Enemy)sprite).wakeUp();
             }
         }
-*/
+
 
     }
 
@@ -326,6 +343,24 @@ public class TileMap {
 		panel.endLevel();
 	}
 
+    Iterator i = getSprites();
+        while (i.hasNext()) {
+            Enemy sprite = (Enemy)i.next();
+            sprite.update();
+        }
+
+
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public void addSprite(Enemy sprite) {
+        sprites.add(sprite);
+        return;
+    }
+
+    public Hunter getPlayer(){
+        return player;
     }
 
 }

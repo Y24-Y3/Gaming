@@ -35,7 +35,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
     @SuppressWarnings("unchecked")
     public GameWindow(){
         setTitle("Nomad");
-        setSize(1200, 820);
+        setSize(1200, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(200, 0);
 
@@ -102,7 +102,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 
         // Game Panel
         gamePanel = new GamePanel();
-        gamePanel.setPreferredSize(new Dimension(600, 500));
+        gamePanel.setPreferredSize(new Dimension(1000, 700));
 
         //Main Panel
         main.add(gamePanel);

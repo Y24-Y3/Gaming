@@ -50,7 +50,7 @@ public class GamePanel extends JPanel
 
 		soundManager = SoundManager.getInstance();
 
-		image = new BufferedImage (600, 500, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage (1000, 700, BufferedImage.TYPE_INT_RGB);
 
 		level = 1;
 		levelChange = false;
@@ -136,11 +136,11 @@ public class GamePanel extends JPanel
 		if (gameOver) {
 			Color darken = new Color (0, 0, 0, 125);
 			imageContext.setColor (darken);
-			imageContext.fill (new Rectangle2D.Double (0, 0, 600, 500));
+			imageContext.fill (new Rectangle2D.Double (0, 0, 1000, 700));
 		}
 
 		Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for the panel
-		g2.drawImage(image, 0, 0, 600, 500, null);	// draw the image on the graphics context
+		g2.drawImage(image, 0, 0, 1000, 700, null);	// draw the image on the graphics context
 
 		imageContext.dispose();
 	}

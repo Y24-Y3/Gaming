@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class Hunter implements Entity{
 
-    private static final int DX = 8;	// amount of X pixels to move in one keystroke
+    private static final int DX = 10;	// amount of X pixels to move in one keystroke
     private static final int DY = 16;	// amount of Y pixels to move in one keystroke
     private static final int TILE_SIZE = 32;
 
@@ -23,6 +23,7 @@ public class Hunter implements Entity{
     private BackgroundManager bgManager;
 
     private boolean jumping;
+    private boolean boss;
     private int timeElapsed;
     private int startY;
 
@@ -43,6 +44,7 @@ public class Hunter implements Entity{
 
         goingUp = goingDown = false;
         inAir = false;
+        boss = false;
 
         l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/walkLeft50x64.gif");
         l2PlayerRightImage = ImageManager.loadImage("Game/images/character/walkRight50x64.gif");
@@ -132,6 +134,9 @@ public class Hunter implements Entity{
 
         int newX = x;
         Point tilePos = null;
+        if (newX >= 11578){
+            boss = true;
+        }
   
         if (!panel.isVisible ()) return;
         
@@ -191,19 +196,21 @@ public class Hunter implements Entity{
         else {
             if (directions[1] == true) {
             x = newX;
-            bgManager.moveLeft();
+            if(!boss)
+                bgManager.moveLeft();
             }
         else
         if (directions[2] == true) {
             x = newX;
-            bgManager.moveRight();
+            if(!boss)
+                bgManager.moveRight();
            }
   
             if (isInAir()) {
             System.out.println("In the air. Starting to fall.");
             if (directions[1] == true) {				// make adjustment for falling on left side of tile
                       int playerWidth = l2PlayerImage.getWidth(null);
-                      x = x + DX;//x = x - playerWidth + DX;
+                      x = x + DX -10 ;   //x = x - playerWidth + DX; having player width throws him off the left from far away, however having playwidth in the other location fixes that; only problem is he gets stuck; subbing 10 however fixes it well;
             }
             fall();
             }
@@ -254,7 +261,7 @@ public class Hunter implements Entity{
         goingDown = false;
   
         startY = y;
-        initialVelocity = 70;
+        initialVelocity = 50;
      }
 
      public void update () {

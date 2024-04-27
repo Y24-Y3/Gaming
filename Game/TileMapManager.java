@@ -33,6 +33,7 @@ public class TileMapManager {
 	this.panel = panel;
 
         loadTileImages();
+        //enemy.loadImage();
 
         //loadCreatureSprites();
         //loadPowerUpSprites();
@@ -78,57 +79,63 @@ public class TileMapManager {
                 int tile = ch - 'A';
                 if (tile >= 0 && tile < tiles.size()) {
                     newMap.setTile(x, y, tiles.get(tile));
+                }else if (ch == 'o') {
+                    Ramm temp = new Ramm(newMap.getPlayer());
+                    addSprite(newMap, temp, x, y);
                 }
-/*
-                // check if the char represents a sprite
-                else if (ch == 'o') {
-                    addSprite(newMap, coinSprite, x, y);
-                }
-                else if (ch == '!') {
-                    addSprite(newMap, musicSprite, x, y);
-                }
-                else if (ch == '*') {
-                    addSprite(newMap, goalSprite, x, y);
-                }
-                else if (ch == '1') {
-                    addSprite(newMap, grubSprite, x, y);
-                }
-                else if (ch == '2') {
-                    addSprite(newMap, flySprite, x, y);
-                }
-*/
-            }
+            // }
+                // else if (ch == 'o') {
+                //     addSprite(newMap, coinSprite, x, y);
+                // }
+
+                // else if (ch == '*') {
+                //     addSprite(newMap, goalSprite, x, y);
+                // }
+                // else if (ch == '1') {
+                //     addSprite(newMap, grubSprite, x, y);
+                // }
+                // else if (ch == '2') {
+                //     addSprite(newMap, flySprite, x, y);
+                // }
+
         }
+    }
 
         return newMap;
     }
 
 
-/*
+
     private void addSprite(TileMap map,
-        Sprite hostSprite, int tileX, int tileY)
+        Enemy hostSprite, int tileX, int tileY)
     {
         if (hostSprite != null) {
             // clone the sprite from the "host"
-            Sprite sprite = (Sprite)hostSprite.clone();
+            Enemy sprite = (Enemy)hostSprite.clone();
 
             // center the sprite
             sprite.setX(
-                TileMapRenderer.tilesToPixels(tileX) +
-                (TileMapRenderer.tilesToPixels(1) -
+                TileMap.tilesToPixels(tileX) +
+                (TileMap.tilesToPixels(1) -
                 sprite.getWidth()) / 2);
 
             // bottom-justify the sprite
             sprite.setY(
-                TileMapRenderer.tilesToPixels(tileY + 1) -
+                TileMap.tilesToPixels(tileY + 1) -
                 sprite.getHeight());
+
+            // og x
+            sprite.setOriginalX(
+                TileMap.tilesToPixels(tileX) +
+                (TileMap.tilesToPixels(1) -
+                sprite.getWidth()) / 2);
 
             // add it to the map
             map.addSprite(sprite);
         }
     }
 
-*/
+
 
     // -----------------------------------------------------------
     // code for loading sprites and images
