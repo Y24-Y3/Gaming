@@ -1,6 +1,8 @@
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.geom.Rectangle2D;
 
-public interface Enemy extends Entity {
+public interface Enemy {
     
     public Enemy clone();
 
@@ -23,4 +25,8 @@ public interface Enemy extends Entity {
     public void update();
 
     public void setOriginalX(int i);
+
+    public void draw(Graphics2D g2d);
+    
+    public Rectangle2D.Double getBounds();
 }

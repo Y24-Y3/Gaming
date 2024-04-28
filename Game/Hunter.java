@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Hunter implements Entity{
+public class Hunter {
 
     private static final int DX = 10;	// amount of X pixels to move in one keystroke
     private static final int DY = 16;	// amount of Y pixels to move in one keystroke
