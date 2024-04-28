@@ -67,7 +67,7 @@ public class RammArrow implements Enemy{
 
     @Override
     public Double getBounds() {
-        return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+        return new Rectangle2D.Double (x, y-spriteImage.getHeight(null)+35, XSIZE, YSIZE);
     }
 
     @Override

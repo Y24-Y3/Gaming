@@ -407,7 +407,7 @@ public class Hunter implements Entity{
         int playerWidth = l2PlayerImage.getWidth(null);
         int playerHeight = l2PlayerImage.getHeight(null);
 
-        return new Rectangle2D.Double (x, y, playerWidth, playerHeight);
+        return new Rectangle2D.Double (x, y- tileMap.getOffsetY(), playerWidth, playerHeight);
     }
 
     public int getX(){

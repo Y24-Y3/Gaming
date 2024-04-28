@@ -67,7 +67,7 @@ public class Bullet implements Enemy{
 
     @Override
     public Double getBounds() {
-        return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+        return new Rectangle2D.Double (x, y - spriteImage.getHeight(null)+115, spriteImage.getWidth(null), spriteImage.getHeight(null));
     }
 
     @Override

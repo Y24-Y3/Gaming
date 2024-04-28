@@ -75,7 +75,7 @@ public class TileMap {
 	heart = new Heart (panel, player);
 		
         sprites = new LinkedList();
-        sprites2 = sprites;
+        sprites2 = new LinkedList();
         arrows = new LinkedList();
         arrows2 = new LinkedList();
         bullets = new LinkedList();
@@ -157,6 +157,7 @@ public class TileMap {
     */
 
     public Iterator getSprites() {
+        sprites = sprites2;
         return sprites.iterator();
     }
 
@@ -380,26 +381,26 @@ public class TileMap {
 	}
 
     arrows2.clear();
-    sprites2 = sprites;
-    Iterator i = getSprites();
+
+    sprites2 = new LinkedList(sprites);
+    Iterator i = sprites2.iterator();
         while (i.hasNext()) {
             Enemy sprite = (Enemy)i.next();
             sprite.update();
 
             if(sprite instanceof Stein){
                 if(((Stein)sprite).dead()){
-                    sprites2.remove(sprite);
+                    i.remove();
                 }
             }
 
             if(sprite instanceof Ramm){
                 if(((Ramm)sprite).dead()){
-                    sprites2.remove(sprite);
+                    i.remove();
                 }
                 arrows2.addAll(((Ramm)sprite).getArrows());
             }
         }
-    sprites = sprites2;
     
     arrows = arrows2;
 

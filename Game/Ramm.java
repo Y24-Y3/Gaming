@@ -84,13 +84,14 @@ public class Ramm implements Enemy{
 
 
 	public Rectangle2D.Double getBounds() {
-		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+		return new Rectangle2D.Double (x, y-spriteImage.getHeight(null)+35, spriteImage.getWidth(null), spriteImage.getHeight(null));
 	}
 
     public void update() {	
 
 		if(health <= 0){
 			dead = true;
+			System.out.println("Ramm killed");
 		}
 
 		if(player.getX() < (x + (spriteImage.getWidth(null)/2))){
@@ -119,11 +120,15 @@ public class Ramm implements Enemy{
 			}
 		}
 
+		bullets = player.getBullets();
 		Iterator i2 = bullets.iterator();
         while (i2.hasNext()) {
             Bullet bullet = (Bullet)i2.next();
+			System.out.println("bullet: " + bullet.getBounds());
+			System.out.println("ramm: " + getBounds());
 			if(bullet.getBounds().intersects(getBounds())){
 				health = health - 1;
+				System.out.println("hit -1");
 				bullet.setFired();
 			}
 		}

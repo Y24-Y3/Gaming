@@ -96,13 +96,14 @@ public class Stein implements Enemy{
 
 
 	public Rectangle2D.Double getBounds() {
-		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+		return new Rectangle2D.Double (x, y+32, spriteImage.getWidth(null), spriteImage.getHeight(null));
 	}
 
     public void update() {	
 
         if(health <= 0){
 			dead = true;
+            System.out.println("Stein killed");
 		}
 
 		if((player.getX() + 25) < (x + (spriteImage.getWidth(null)/2))){ //facing left
@@ -152,11 +153,13 @@ public class Stein implements Enemy{
 
         }
 
+        bullets = player.getBullets();
         Iterator i2 = bullets.iterator();
         while (i2.hasNext()) {
             Bullet bullet = (Bullet)i2.next();
-			if(bullet.getBounds().intersects(getBounds())){
+			if(getBounds().intersects(bullet.getBounds())){
 				health = health - 1;
+                System.out.println("hit -1");
 				bullet.setFired();
 			}
 		}
