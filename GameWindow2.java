@@ -262,5 +262,12 @@ public class GameWindow2 extends JFrame implements ActionListener, KeyListener, 
 	
 	}
 
+   
+    public void startLevel2(){
+        gp.endGameThread();
+        gamePanel.startGame();
+        cardLayout.show(cardPanel, "gamePanel2");
+        return;
+    }
     
 }

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Rectangle2D;
 
 /**
@@ -126,6 +127,11 @@ public class GamePanel2 extends JPanel
 		Graphics2D imageContext = (Graphics2D) image.getGraphics();
 
 		tileMap.draw (imageContext);
+
+		Font font = new Font("Arial", Font.PLAIN, 20);
+		imageContext.setFont(font);
+        imageContext.setColor(Color.WHITE);
+		imageContext.drawString(" Health: " + tileMap.getPlayer().getHealth(), 900, 70);
 
 		//animation.draw(imageContext);
 		if (isAnimShown){

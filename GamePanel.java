@@ -68,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable{
 
         sm = SoundManager.getInstance();
     }
-
+    
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
