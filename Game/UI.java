@@ -69,7 +69,7 @@ public class UI {
     public void DrawMenuScreen(){
         // Title Name
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50));
-        image = ImageManager.loadImage("images//Title//Title.png");
+        image = ImageManager.loadImage("Game//images//Title//Title.png");
         g2.drawImage(image, 0, 0, gp.getScreenWidth(), gp.getScreenHeight(), null);
     }
 

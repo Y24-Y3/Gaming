@@ -30,11 +30,11 @@ public class Bear extends Entities{
     }
 
     public void Image(){
-        idle = new StripAnimation("images//sprites//Bear_Idle.png", 12, 100);
-        run = new StripAnimation("images//sprites//Bear_Run.png", 5, 100);
-        attack1 = new StripAnimation("images//sprites//beer_attack1.png", 9, 120);
-        attack2 = new StripAnimation("images//sprites//beer_attack2.png", 9, 120);
-        die = new StripAnimation("images//sprites//beer_dead.png", 9, 200);
+        idle = new StripAnimation("Game//images//sprites//Bear_Idle.png", 12, 100);
+        run = new StripAnimation("Game//images//sprites//Bear_Run.png", 5, 100);
+        attack1 = new StripAnimation("Game//images//sprites//beer_attack1.png", 9, 120);
+        attack2 = new StripAnimation("Game//images//sprites//beer_attack2.png", 9, 120);
+        die = new StripAnimation("Game//images//sprites//beer_dead.png", 9, 200);
     }
 
 

@@ -38,8 +38,8 @@ public class Bullet implements Enemy{
         dx = 15;
         count = 0;
 
-        spriteLeftImage = ImageManager.loadImage("Game/images/character/bulletLeft52x11.png");
-        spriteRightImage = ImageManager.loadImage("Game/images/character/bulletRight52x11.png");
+        spriteLeftImage = ImageManager.loadImage("Game//images//character//bulletLeft52x11.png");
+        spriteRightImage = ImageManager.loadImage("Game//images//character//bulletRight52x11.png");
 
         if(direction ==1){
             spriteImage = spriteLeftImage;

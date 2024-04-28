@@ -142,7 +142,7 @@ public class TileMapManager {
         tiles = new ArrayList<Image>();
         char ch = 'A';
         while (true) {
-            String filename = "Game/images/tiles/tile_" + ch + ".png";
+            String filename = "Game//images//tiles//tile_" + ch + ".png";
 	    file = new File(filename);
             if (!file.exists()) {
 		System.out.println("Image file could not be opened: " + filename);

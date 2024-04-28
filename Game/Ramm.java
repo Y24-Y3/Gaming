@@ -56,8 +56,8 @@ public class Ramm implements Enemy{
 		dead = false;
 		health = 5;
 
-		spriteLeftImage = ImageManager.loadImage("Game/images/ramm/rammShootLeft100.gif");
-		spriteRightImage = ImageManager.loadImage("Game/images/ramm/rammShootRight100.gif");
+		spriteLeftImage = ImageManager.loadImage("Game//images//ramm//rammShootLeft100.gif");
+		spriteRightImage = ImageManager.loadImage("Game//images//ramm//rammShootRight100.gif");
 		spriteImage = spriteRightImage;
 
 	}

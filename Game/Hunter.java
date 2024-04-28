@@ -61,12 +61,12 @@ public class Hunter implements Entity{
         health = 10;
         dead = false;
 
-        l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/walkLeft50x64.gif");
-        l2PlayerRightImage = ImageManager.loadImage("Game/images/character/walkRight50x64.gif");
-        l2PlayerIdleRightImage = ImageManager.loadImage("Game/images/character/idleRight50x64.gif");
-        l2PlayerIdleLeftImage = ImageManager.loadImage("Game/images/character/idleLeft50x64.gif");
-        l2PlayerShootRightImage = ImageManager.loadImage("Game/images/character/shootRight50x64.gif");
-        l2PlayerShootLeftImage = ImageManager.loadImage("Game/images/character/shootLeft50x64.gif");
+        l2PlayerLeftImage = ImageManager.loadImage("Game//images//character//walkLeft50x64.gif");
+        l2PlayerRightImage = ImageManager.loadImage("Game//images//character//walkRight50x64.gif");
+        l2PlayerIdleRightImage = ImageManager.loadImage("Game//images//character//idleRight50x64.gif");
+        l2PlayerIdleLeftImage = ImageManager.loadImage("Game//images//character//idleLeft50x64.gif");
+        l2PlayerShootRightImage = ImageManager.loadImage("Game//images//character//shootRight50x64.gif");
+        l2PlayerShootLeftImage = ImageManager.loadImage("Game//images//character//shootLeft50x64.gif");
         l2PlayerImage = l2PlayerIdleRightImage;
         soundManager = SoundManager.getInstance();
 

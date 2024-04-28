@@ -16,11 +16,11 @@ import javax.swing.JPanel;
 
 public class BackgroundManager {
 
-	private String bgImages[] = {"Game/images/background/1.png",
-				     "Game/images/background/2.png",
-				     "Game/images/background/3.png",
-				     "Game/images/background/4.png",
-			       	     "Game/images/background/5.png"};
+	private String bgImages[] = {"Game//images//background//1.png",
+				     "Game//images//background//2.png",
+				     "Game//images//background//3.png",
+				     "Game//images//background//4.png",
+			       	     "Game//images//background//5.png"};
 
 	  private int moveAmount[] = {10, 4, 3, 2, 1};  
 						// pixel amounts to move each background left or right

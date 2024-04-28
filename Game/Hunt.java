@@ -143,10 +143,10 @@ public class Hunt extends Entities{
     
 
     public void Image(){
-        walking = new StripAnimation("images//character//Walk.png", 7, 100);
-        idle = new StripAnimation("images//character//Idle.png", 8, 100);
-        die = new StripAnimation("images//character//dieNob.png", 5, 200);
-        attack = new StripAnimation("images//character//attackNob.png", 4, 100);
+        walking = new StripAnimation("Game//images//character//Walk.png", 7, 100);
+        idle = new StripAnimation("Game//images//character//Idle.png", 8, 100);
+        die = new StripAnimation("Game//images//character//dieNob.png", 5, 200);
+        attack = new StripAnimation("Game//images//character//attackNob.png", 4, 100);
     }
 
 
@@ -172,8 +172,8 @@ public class Hunt extends Entities{
         else{
             idle.draw(g2d, screenX, screenY,size, size );
         }
-        g2d.setColor(Color.RED);
-        g2d.drawRect(screenX, screenY, size, size);
+        //g2d.setColor(Color.RED);
+        //g2d.drawRect(screenX, screenY, size, size);
 
     }
 

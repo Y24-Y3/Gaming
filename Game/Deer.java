@@ -32,10 +32,10 @@ public class Deer extends Entities {
     }
 
     public void Image(){
-        up = new StripAnimation("images//sprites//deer_run_up.png", 3, 100);
-        down = new StripAnimation("images//sprites//deer_run_down.png", 3, 100);
-        left = new StripAnimation("images//sprites//deer_run_left.png", 3, 100);
-        right = new StripAnimation("images//sprites//deer_run_right.png", 3, 100);
+        up = new StripAnimation("Game//images//sprites//deer_run_up.png", 3, 100);
+        down = new StripAnimation("Game//images//sprites//deer_run_down.png", 3, 100);
+        left = new StripAnimation("Game//images//sprites//deer_run_left.png", 3, 100);
+        right = new StripAnimation("Game//images//sprites//deer_run_right.png", 3, 100);
     }
 
     public void setAction(){

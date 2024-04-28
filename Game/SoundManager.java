@@ -17,54 +17,54 @@ public class SoundManager {
 
 
         // // Level 1 Tentative sounds
-        clip = loadClip("sounds//background//beginning.WAV");
+        clip = loadClip("Game//sounds//background//beginning.WAV");
         clips.put("intro", clip);
 
-        clip = loadClip("sounds//background//loop1.WAV");
+        clip = loadClip("Game//sounds//background//loop1.WAV");
         clips.put("level1_loop", clip);
 
-        clip = loadClip("sounds//character//walking//walking_grass.WAV");
+        clip = loadClip("Game//sounds//character//walking//walking_grass.WAV");
         clips.put("walking1", clip);
 
-        // clip = loadClip("sounds//conditions//Hit.WAV");
+        // clip = loadClip("Game//sounds//conditions//Hit.WAV");
         // clips.put("hit", clip);
 
-        // clip = loadClip("sounds//conditions//intense_loop.WAV");
+        // clip = loadClip("Game//sounds//conditions//intense_loop.WAV");
         // clips.put("critical", clip);
 
-        // clip = loadClip("sounds//conditions//ko.WAV");
+        // clip = loadClip("Game//sounds//conditions//ko.WAV");
         // clips.put("death", clip);
 
-        // clip = loadClip("sounds//conditions//reload.WAV");
+        // clip = loadClip("Game//sounds//conditions//reload.WAV");
         // clips.put("reload", clip);
 
-        // clip = loadClip("sounds//conditions//shoot.WAV");
+        // clip = loadClip("Game//sounds//conditions//shoot.WAV");
         // clips.put("shoot", clip);
 
-        // clip = loadClip("sounds//conditions//critical.WAV");
+        // clip = loadClip("Game//sounds//conditions//critical.WAV");
         // clips.put("1hp", clip);
 
-        // clip = loadClip("sounds//conditions//Game-Over.WAV");
+        // clip = loadClip("Game//sounds//conditions//Game-Over.WAV");
         // clips.put("gameover", clip);
 
-        // clip = loadClip("sounds//conditions//heal.WAV");
+        // clip = loadClip("Game//sounds//conditions//heal.WAV");
         // clips.put("heal", clip);
 
-        // clip = loadClip("sounds//creatures//Bear.WAV");
+        // clip = loadClip("Game//sounds//creatures//Bear.WAV");
         // clips.put("bear", clip);
 
 
-        // clip = loadClip("sounds//Objective//repair.WAV");
+        // clip = loadClip("Game//sounds//Objective//repair.WAV");
         // clips.put("repair", clip);
 
-        // clip = loadClip("sounds//transition//loop1.WAV");
+        // clip = loadClip("Game//sounds//transition//loop1.WAV");
         // clips.put("transition1", clip);
 
-        clip = loadClip("sounds//transition//loop2.WAV");
+        clip = loadClip("Game//sounds//transition//loop2.WAV");
         clips.put("transition2", clip);
 
 
-        clip = loadClip("sounds//transition//lvl2intro.WAV");
+        clip = loadClip("Game//sounds//transition//lvl2intro.WAV");
         clips.put("level2_intro", clip);
 
         // ====================================================

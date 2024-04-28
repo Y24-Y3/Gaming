@@ -22,13 +22,13 @@ public class TileMapManagerHelp {
         }
     
     public void getTileImage(){
-        setUp(0, "images//tiles//l1//tile_A.png", true);
-        setUp(1, "images//tiles//l1//tile_B.png", false);
-        setUp(2, "images//tiles//l1//tile_C.png", false);
-        setUp(3, "images//tiles//l1//tile_D.png", false);
-        setUp(4, "images//tiles//l1//tile_E.png", true);
-        setUp(5, "images//tiles//l1//tile_F.png", false);
-        setUp(6, "images//tiles//l1//tile_G.png", false);
+        setUp(0, "Game//images//tiles//l1//tile_A.png", true);
+        setUp(1, "Game//images//tiles//l1//tile_B.png", false);
+        setUp(2, "Game//images//tiles//l1//tile_C.png", false);
+        setUp(3, "Game//images//tiles//l1//tile_D.png", false);
+        setUp(4, "Game//images//tiles//l1//tile_E.png", true);
+        setUp(5, "Game//images//tiles//l1//tile_F.png", false);
+        setUp(6, "Game//images//tiles//l1//tile_G.png", false);
 
     }
 

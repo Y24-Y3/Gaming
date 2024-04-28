@@ -12,27 +12,32 @@ public class StripAnimation {
 	private int height; // height of animation
 
     public StripAnimation(String imagePath, int frameCount, int frameDuration) {
-        animation = new Animation(false);  // run animation once
+    animation = new Animation(false); // run animation once
 
-        // Load images from strip file
-        Image stripImage = ImageManager.loadImage(imagePath);
+    // Load images from strip file
+    Image stripImage = ImageManager.loadImage(imagePath);
 
-        int imageWidth = stripImage.getWidth(null) / frameCount;
-        int imageHeight = stripImage.getHeight(null);
+    int imageWidth = stripImage.getWidth(null) / frameCount;
+    int imageHeight = stripImage.getHeight(null);
 
-        for (int i = 0; i < frameCount; i++) {
-            BufferedImage frameImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g = frameImage.createGraphics();
+    // Debug: Print out dimensions
+    System.out.println("Image Width: " + imageWidth);
+    System.out.println("Image Height: " + imageHeight);
 
-            g.drawImage(stripImage,
-                    0, i * imageHeight, imageWidth*2, (i + 1) * imageHeight,
-                    0, i * imageHeight, imageWidth*2, (i + 1) * imageHeight,
-                    null);
+    for (int i = 0; i < frameCount; i++) {
+        BufferedImage frameImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = frameImage.createGraphics();
 
-            g.dispose();
-            animation.addFrame(frameImage, frameDuration);
-        }
+        g.drawImage(stripImage,
+                0, i * imageHeight, imageWidth*2, (i + 1) * imageHeight,
+                0, i * imageHeight, imageWidth*2, (i + 1) * imageHeight,
+                null);
+
+        g.dispose();
+        animation.addFrame(frameImage, frameDuration);
     }
+}
+
 
     public void start() {
         animation.start();

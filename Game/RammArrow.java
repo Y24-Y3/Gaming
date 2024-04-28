@@ -38,8 +38,8 @@ public class RammArrow implements Enemy{
         dx = 15;
         count = 0;
 
-        spriteLeftImage = ImageManager.loadImage("Game/images/ramm/ArrowLeft52x8.png");
-        spriteRightImage = ImageManager.loadImage("Game/images/ramm/ArrowRight52x8.png");
+        spriteLeftImage = ImageManager.loadImage("Game//images//ramm//ArrowLeft52x8.png");
+        spriteRightImage = ImageManager.loadImage("Game//images//ramm//ArrowRight52x8.png");
 
         if(direction ==1){
             spriteImage = spriteLeftImage;

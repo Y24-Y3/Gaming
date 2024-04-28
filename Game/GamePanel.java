@@ -175,7 +175,7 @@ public class GamePanel extends JPanel implements Runnable {
 			tileManager = new TileMapManager (this);
 
 			try {
-				String filename = "Game/maps/map" + level + ".txt";
+				String filename = "Game//maps//map" + level + ".txt";
 				tileMap = tileManager.loadMap(filename) ;
 				int w, h;
 				w = tileMap.getWidth();
@@ -226,7 +226,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 			tileManager = new TileMapManager (this);
 			try {
-				tileMap = tileManager.loadMap("Game/maps/map1.txt");
+				tileMap = tileManager.loadMap("Game//maps//map1.txt");
 				int w, h;
 				w = tileMap.getWidth();
 				h = tileMap.getHeight();
@@ -255,7 +255,7 @@ public class GamePanel extends JPanel implements Runnable {
 			tileManager = new TileMapManager (this);
 
 			try {
-				tileMap = tileManager.loadMap("Game/maps/map1.txt");
+				tileMap = tileManager.loadMap("Game//maps//map1.txt");
 				int w, h;
 				w = tileMap.getWidth();
 				h = tileMap.getHeight();

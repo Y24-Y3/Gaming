@@ -63,12 +63,12 @@ public class Stein implements Enemy{
         dead = false;
 		health = 10;
         bullets = player.getBullets();
-		spriteLeftImageWalk = ImageManager.loadImage("Game/images/stein/walkLeft60x100.gif");
-	    spriteRightImageWalk = ImageManager.loadImage("Game/images/stein/walkRight60x100.gif");
-        spriteLeftImageIdle = ImageManager.loadImage("Game/images/stein/idleLeft60x100.gif");
-        spriteRightImageIdle = ImageManager.loadImage("Game/images/stein/idleRight60x100.gif");
-        spriteLeftImageAttack = ImageManager.loadImage("Game/images/stein/attackLeft100x100.gif");
-        spriteRightImageAttack = ImageManager.loadImage("Game/images/stein/attackRight100x100.gif");
+		spriteLeftImageWalk = ImageManager.loadImage("Game//images//stein//walkLeft60x100.gif");
+	    spriteRightImageWalk = ImageManager.loadImage("Game//images//stein//walkRight60x100.gif");
+        spriteLeftImageIdle = ImageManager.loadImage("Game//images//stein//idleLeft60x100.gif");
+        spriteRightImageIdle = ImageManager.loadImage("Game//images//stein//idleRight60x100.gif");
+        spriteLeftImageAttack = ImageManager.loadImage("Game//images//stein//attackLeft100x100.gif");
+        spriteRightImageAttack = ImageManager.loadImage("Game//images//stein//attackRight100x100.gif");
 		
 		spriteImage = spriteLeftImageIdle;
 
