@@ -82,21 +82,10 @@ public class TileMapManager {
                 }else if (ch == 'o') {
                     Ramm temp = new Ramm(newMap);
                     addSprite(newMap, temp, x, y);
+                }else if (ch == 's') {
+                    Stein temp = new Stein(newMap);
+                    addSprite(newMap, temp, x, y);
                 }
-            // }
-                // else if (ch == 'o') {
-                //     addSprite(newMap, coinSprite, x, y);
-                // }
-
-                // else if (ch == '*') {
-                //     addSprite(newMap, goalSprite, x, y);
-                // }
-                // else if (ch == '1') {
-                //     addSprite(newMap, grubSprite, x, y);
-                // }
-                // else if (ch == '2') {
-                //     addSprite(newMap, flySprite, x, y);
-                // }
 
         }
     }

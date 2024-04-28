@@ -8,7 +8,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 
     //
     //public HashSet<Integer> directions;
-    public boolean[] directions = {false, false, false, false};;
+    public boolean[] directions = {false, false, false, false};
 
     // labels
     private JLabel inventory, questItems, health, status, gamelevel;
@@ -161,8 +161,13 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 			gamePanel.setDirections(directions);
 		}
         //else
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
             directions[3] = true;
+			gamePanel.setDirections(directions);
+		}
+
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            directions[0] = true;
 			gamePanel.setDirections(directions);
 		}
         // else
@@ -190,8 +195,13 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 			gamePanel.setDirections(directions);
 		}
         //else
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
             directions[3] = false;
+			gamePanel.setDirections(directions);
+		}
+        //else
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            directions[0] = false;
 			gamePanel.setDirections(directions);
 		}
 

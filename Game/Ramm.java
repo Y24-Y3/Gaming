@@ -31,7 +31,6 @@ public class Ramm implements Enemy{
 	boolean originalImage, grayImage;
 
 	int count;
-	int count2;
 
 
 	public Ramm (TileMap map) {  
@@ -91,7 +90,6 @@ public class Ramm implements Enemy{
 		}
 
 		count++;
-		count2++;
 
 		if(count == 22){
 			//shoot
@@ -101,13 +99,7 @@ public class Ramm implements Enemy{
 		if(count% 28 == 0){
 			//reset
 			count = 0;
-			// count2 = 0;
 		}
-
-		// if(count2 == 12){
-		// 	//shoot
-		// 	shoot();
-		// }
 
 		Iterator i = arrows.iterator();
         while (i.hasNext()) {

@@ -28,6 +28,8 @@ public class TileMap {
     private LinkedList sprites;
     private LinkedList arrows;
     private LinkedList arrows2;
+    private LinkedList bullets;
+    private LinkedList bullets2;
     private Hunter player;
     private Heart heart;
 
@@ -74,6 +76,8 @@ public class TileMap {
         sprites = new LinkedList();
         arrows = new LinkedList();
         arrows2 = new LinkedList();
+        bullets = new LinkedList();
+        bullets2 = new LinkedList();
 
 	Image playerImage = player.getImage();
 	int playerHeight = playerImage.getHeight(null);
@@ -265,6 +269,10 @@ public class TileMap {
                 // If sprite is an instance of the Ramm class
                 g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 5, null);
             }
+            if (sprite instanceof Stein) {
+                // If sprite is an instance of the Ramm class
+                g2.drawImage(sprite.getImage(), x, y + 32, null);
+            }
 
             // wake up the creature when it's on screen
             if (x >= 0 && x < screenWidth){
@@ -280,6 +288,17 @@ public class TileMap {
             int x = Math.round(sprite.getX()) + offsetX;
             int y = Math.round(sprite.getY()) + offsetY;
             // Draw the arrow
+            g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 35, null);
+        }
+
+        // draw bullets sprites
+        bullets = bullets2;
+        Iterator i3 = bullets.iterator();
+        while (i2.hasNext()) {
+            Bullet sprite = (Bullet)i2.next();
+            int x = Math.round(sprite.getX()) + offsetX;
+            int y = Math.round(sprite.getY()) + offsetY;
+            // Draw the bullet
             g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 35, null);
         }
 
@@ -370,13 +389,21 @@ public class TileMap {
         }
     
     arrows = arrows2;
-    // arrows2.clear();
-    // arrows2.add
+
     Iterator i2 = arrows.iterator();
         while (i2.hasNext()) {
             RammArrow sprite = (RammArrow)i2.next();
             sprite.update();
         }
+
+ 
+    bullets2 = player.getBullets();
+    Iterator i3 = bullets2.iterator();
+        while (i3.hasNext()) {
+            Bullet sprite = (Bullet)i3.next();
+            sprite.update();
+        }
+
 
 
     }

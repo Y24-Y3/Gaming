@@ -2,6 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.geom.Rectangle2D;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Hunter implements Entity{
 
@@ -15,7 +17,7 @@ public class Hunter implements Entity{
 
     private JPanel panel;
     private int x, y, width, height, dx, dy;
-    private Image l2PlayerImage, l2PlayerLeftImage, l2PlayerRightImage, l2PlayerIdleRightImage, l2PlayerIdleLeftImage;
+    private Image l2PlayerImage, l2PlayerLeftImage, l2PlayerRightImage, l2PlayerIdleRightImage, l2PlayerIdleLeftImage, l2PlayerShootRightImage, l2PlayerShootLeftImage;
     private SoundManager soundManager;
     private Dimension d;
     private Color color;
@@ -34,6 +36,10 @@ public class Hunter implements Entity{
     private int initialVelocity;
     private int startAir;
 
+    private boolean shot;
+    private int count;
+    private LinkedList bullets;
+
 
 
     public Hunter(JPanel panel, TileMap t, BackgroundManager b){
@@ -45,11 +51,16 @@ public class Hunter implements Entity{
         goingUp = goingDown = false;
         inAir = false;
         boss = false;
+        shot = false; // use to make to fire
+        count = 0;
+        bullets = new LinkedList();
 
         l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/walkLeft50x64.gif");
         l2PlayerRightImage = ImageManager.loadImage("Game/images/character/walkRight50x64.gif");
         l2PlayerIdleRightImage = ImageManager.loadImage("Game/images/character/idleRight50x64.gif");
         l2PlayerIdleLeftImage = ImageManager.loadImage("Game/images/character/idleLeft50x64.gif");
+        l2PlayerShootRightImage = ImageManager.loadImage("Game/images/character/shootRight50x64.gif");
+        l2PlayerShootLeftImage = ImageManager.loadImage("Game/images/character/shootLeft50x64.gif");
         l2PlayerImage = l2PlayerIdleRightImage;
         soundManager = SoundManager.getInstance();
 
@@ -137,6 +148,13 @@ public class Hunter implements Entity{
         if (newX >= 11578){
             boss = true;
         }
+        if(shot){
+            count++;
+        }
+    
+        if(count > 8){
+            shot = false;
+        }
   
         if (!panel.isVisible ()) return;
         
@@ -172,14 +190,27 @@ public class Hunter implements Entity{
             jump();
         return;
         }
+
+        if(directions[0] && !shot){
+            if(lastDirection == 1){
+                l2PlayerImage = l2PlayerShootLeftImage;
+            }
+            else{
+                l2PlayerImage = l2PlayerShootRightImage;
+            }
+            shoot();
+            count = 0;
+            shot = true;
+        }
         //else
-        if (!directions[1] && !directions[2] && lastDirection == 1){
+        if (!directions[0] && !directions[1] && !directions[2] && lastDirection == 1){
             l2PlayerImage = l2PlayerIdleLeftImage;
         }
         //else
-        if (!directions[1] && !directions[2] && lastDirection == 2){
+        if (!directions[0] && !directions[1] && !directions[2] && lastDirection == 2){
             l2PlayerImage = l2PlayerIdleRightImage;
         }
+        
 
         if (tilePos != null) {  
            if (directions[1]) {
@@ -331,6 +362,14 @@ public class Hunter implements Entity{
              }
          }
         }
+
+        Iterator i = bullets.iterator();
+        while (i.hasNext()) {
+            Bullet bullet = (Bullet)i.next();
+			if(!bullet.fired()){
+				bullets.remove(bullet);
+			}
+		}
      }
 
      public void moveUp () {
@@ -368,4 +407,14 @@ public class Hunter implements Entity{
      public Image getImage() {
         return l2PlayerImage;
      }
+
+     private void shoot() {
+		//pow pow pow
+		Bullet temp = new Bullet(tileMap, lastDirection, this.getX(), this.getY());
+		bullets.add(temp);
+	}
+
+    public LinkedList getBullets(){
+		return bullets;
+	}
 }
