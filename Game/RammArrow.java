@@ -1,5 +1,6 @@
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 
@@ -78,10 +79,23 @@ public class RammArrow implements Enemy{
 
         if(direction == 1){
             //code for left arrow
+            // Point tilePos = collidesWithTile((x-dx), y);
+            // if(tilePos != null)
+            //     fired = false;
+                
             x = x - dx;
         }else{
             //code for right arrow
+            // Point tilePos = collidesWithTile((x+dx+ spriteImage.getWidth(null)), y);
+            // if(tilePos != null)
+            //     fired = false;
+
             x = x + dx;
+        }
+
+        if(collidesWithPlayer()){
+            player.takeDamage(1);
+            fired = false;
         }
 
     }
@@ -139,6 +153,22 @@ public class RammArrow implements Enemy{
     public boolean fired(){
         return fired;
     }
+
+    // public Point collidesWithTile(int newX, int newY) {
+
+    //     //int playerWidth = spriteImage.getWidth(null);
+    //     int offsetY = map.getOffsetY();
+    //     int xTile = map.pixelsToTiles(newX);
+    //     int yTile = map.pixelsToTiles(newY - offsetY);
+
+    //     if (map.getTile(xTile, yTile) != null) {
+    //             Point tilePos = new Point (xTile, yTile);
+    //         return tilePos;
+    //     }
+    //     else {
+    //         return null;
+    //     }
+    // }
 
 
 }

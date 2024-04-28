@@ -30,6 +30,9 @@ public class Stein implements Enemy{
     private Image spriteRightImageAttack;
     int lastDirection;
     boolean gapClosed;
+    private boolean dead;
+	private int health;
+	private LinkedList bullets;
 
 	//Graphics2D g2;
 
@@ -57,6 +60,9 @@ public class Stein implements Enemy{
 		count = 0;
         lastDirection = 2;
         gapClosed = false;
+        dead = false;
+		health = 10;
+        bullets = player.getBullets();
 		spriteLeftImageWalk = ImageManager.loadImage("Game/images/stein/walkLeft60x100.gif");
 	    spriteRightImageWalk = ImageManager.loadImage("Game/images/stein/walkRight60x100.gif");
         spriteLeftImageIdle = ImageManager.loadImage("Game/images/stein/idleLeft60x100.gif");
@@ -95,6 +101,10 @@ public class Stein implements Enemy{
 
     public void update() {	
 
+        if(health <= 0){
+			dead = true;
+		}
+
 		if((player.getX() + 25) < (x + (spriteImage.getWidth(null)/2))){ //facing left
 			lastDirection = 1;
 		}else{
@@ -130,9 +140,7 @@ public class Stein implements Enemy{
                 }else{
                     spriteImage = spriteRightImageIdle;
                 }
-            }
-
-            
+            } 
 
         }else{// do nothing
 
@@ -143,6 +151,15 @@ public class Stein implements Enemy{
             }
 
         }
+
+        Iterator i2 = bullets.iterator();
+        while (i2.hasNext()) {
+            Bullet bullet = (Bullet)i2.next();
+			if(bullet.getBounds().intersects(getBounds())){
+				health = health - 1;
+				bullet.setFired();
+			}
+		}
 		
         
     }
@@ -215,5 +232,9 @@ public class Stein implements Enemy{
             return null;
         }
     }
+
+    public boolean dead(){
+		return dead;
+	}
 
 }

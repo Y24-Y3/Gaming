@@ -18,6 +18,7 @@ public class Ramm implements Enemy{
     private int originalX;
 
 	private LinkedList arrows;
+	private LinkedList bullets;
 	private Hunter player;
 	private TileMap map;
 
@@ -31,6 +32,8 @@ public class Ramm implements Enemy{
 	boolean originalImage, grayImage;
 
 	int count;
+	private boolean dead;
+	private int health;
 
 
 	public Ramm (TileMap map) {  
@@ -49,6 +52,9 @@ public class Ramm implements Enemy{
 		grayImage = false;
 		count = 0;
 		arrows = new LinkedList();
+		bullets = player.getBullets();
+		dead = false;
+		health = 5;
 
 		spriteLeftImage = ImageManager.loadImage("Game/images/ramm/rammShootLeft100.gif");
 		spriteRightImage = ImageManager.loadImage("Game/images/ramm/rammShootRight100.gif");
@@ -83,6 +89,10 @@ public class Ramm implements Enemy{
 
     public void update() {	
 
+		if(health <= 0){
+			dead = true;
+		}
+
 		if(player.getX() < (x + (spriteImage.getWidth(null)/2))){
 			spriteImage = spriteLeftImage;
 		}else{
@@ -106,6 +116,15 @@ public class Ramm implements Enemy{
             RammArrow arrow = (RammArrow)i.next();
 			if(!arrow.fired()){
 				arrows.remove(arrow);
+			}
+		}
+
+		Iterator i2 = bullets.iterator();
+        while (i2.hasNext()) {
+            Bullet bullet = (Bullet)i2.next();
+			if(bullet.getBounds().intersects(getBounds())){
+				health = health - 1;
+				bullet.setFired();
 			}
 		}
 		//map.setArrowSprites(arrows);
@@ -191,6 +210,10 @@ public class Ramm implements Enemy{
 
 	public LinkedList getArrows(){
 		return arrows;
+	}
+
+	public boolean dead(){
+		return dead;
 	}
 
 }

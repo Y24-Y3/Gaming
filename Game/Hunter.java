@@ -40,6 +40,9 @@ public class Hunter implements Entity{
     private int count;
     private LinkedList bullets;
 
+    private int health;
+    private boolean dead;
+
 
 
     public Hunter(JPanel panel, TileMap t, BackgroundManager b){
@@ -53,7 +56,10 @@ public class Hunter implements Entity{
         boss = false;
         shot = false; // use to make to fire
         count = 0;
+        lastDirection = 2;
         bullets = new LinkedList();
+        health = 10;
+        dead = false;
 
         l2PlayerLeftImage = ImageManager.loadImage("Game/images/character/walkLeft50x64.gif");
         l2PlayerRightImage = ImageManager.loadImage("Game/images/character/walkRight50x64.gif");
@@ -152,7 +158,7 @@ public class Hunter implements Entity{
             count++;
         }
     
-        if(count > 8){
+        if(count > 10){
             shot = false;
         }
   
@@ -198,6 +204,8 @@ public class Hunter implements Entity{
             else{
                 l2PlayerImage = l2PlayerShootRightImage;
             }
+
+
             shoot();
             count = 0;
             shot = true;
@@ -246,6 +254,14 @@ public class Hunter implements Entity{
             fall();
             }
         }
+
+        // Iterator i = bullets.iterator();
+        // while (i.hasNext()) {
+        //     Bullet bullet = (Bullet)i.next();
+		// 	if(!arrow.fired()){
+		// 		arrows.remove(arrow);
+		// 	}
+		// }
      }
 
      public boolean isInAir() {
@@ -298,6 +314,10 @@ public class Hunter implements Entity{
      public void update () {
         int distance = 0;
         int newY = 0;
+
+        if(health <= 0){
+            dead = true;
+        }
   
         timeElapsed++;
   
@@ -417,4 +437,22 @@ public class Hunter implements Entity{
     public LinkedList getBullets(){
 		return bullets;
 	}
+
+    public void takeDamage(int x){
+        health = health - x;
+        return;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
+    public void setHealth(int x){
+        health = x;
+        return;
+    }
+
+    public boolean dead(){
+        return dead;
+    }
 }

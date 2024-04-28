@@ -26,6 +26,7 @@ public class TileMap {
     private int offsetY;
 
     private LinkedList sprites;
+    private LinkedList sprites2;
     private LinkedList arrows;
     private LinkedList arrows2;
     private LinkedList bullets;
@@ -74,6 +75,7 @@ public class TileMap {
 	heart = new Heart (panel, player);
 		
         sprites = new LinkedList();
+        sprites2 = sprites;
         arrows = new LinkedList();
         arrows2 = new LinkedList();
         bullets = new LinkedList();
@@ -294,12 +296,12 @@ public class TileMap {
         // draw bullets sprites
         bullets = bullets2;
         Iterator i3 = bullets.iterator();
-        while (i2.hasNext()) {
-            Bullet sprite = (Bullet)i2.next();
+        while (i3.hasNext()) {
+            Bullet sprite = (Bullet)i3.next();
             int x = Math.round(sprite.getX()) + offsetX;
             int y = Math.round(sprite.getY()) + offsetY;
             // Draw the bullet
-            g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 35, null);
+            g2.drawImage(sprite.getImage(), x, y - sprite.getHeight() + 115, null);
         }
 
 
@@ -378,15 +380,26 @@ public class TileMap {
 	}
 
     arrows2.clear();
-
+    sprites2 = sprites;
     Iterator i = getSprites();
         while (i.hasNext()) {
             Enemy sprite = (Enemy)i.next();
             sprite.update();
 
-            if(sprite instanceof Ramm)
+            if(sprite instanceof Stein){
+                if(((Stein)sprite).dead()){
+                    sprites2.remove(sprite);
+                }
+            }
+
+            if(sprite instanceof Ramm){
+                if(((Ramm)sprite).dead()){
+                    sprites2.remove(sprite);
+                }
                 arrows2.addAll(((Ramm)sprite).getArrows());
+            }
         }
+    sprites = sprites2;
     
     arrows = arrows2;
 
