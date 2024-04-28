@@ -47,7 +47,7 @@ public class Stein implements Enemy{
         
 		// x = 4128;
 		// y = 270;
-		dx = 2;
+		dx = 3;
         originalX = x;
 
 		this.map = map;
@@ -120,7 +120,7 @@ public class Stein implements Enemy{
                 spriteImage = spriteRightImageAttack;
         }else if(distance < 50 && lastDirection == 1){
             spriteImage = spriteLeftImageAttack;
-        }else if(distance < 200){// pursue range
+        }else if(distance < 400){// pursue range
 
             if(lastDirection == 1){
                 Point tilePos = collidesWithTile((x-dx), y);

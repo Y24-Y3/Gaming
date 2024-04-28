@@ -196,7 +196,7 @@ public class TileMap {
 
         // get the scrolling position of the map
         // based on player's position
-        if(player.getX() >= 11578)
+        if(player.getX() >= 11578 && (player.getY() + player.getImage().getHeight(null)) > 300)
             boss = true;
 
         int offsetX;
