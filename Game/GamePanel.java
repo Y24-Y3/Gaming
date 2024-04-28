@@ -1,307 +1,182 @@
+import java.awt.*;
+import java.io.IOException;
+
 import javax.swing.JPanel;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.HashSet;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
+import javax.swing.SwingUtilities;
 
-/**
-   A component that displays all the game entities
-*/
+public class GamePanel extends JPanel implements Runnable{
+    
+    // Screen variables 
+    final int originalSize = 18;
+    final int scale = 3;
 
-public class GamePanel extends JPanel implements Runnable {
+    final int maxScreenCol = 20;
+    final int maxScreenRow = 14;
+    final int tileSize = originalSize * scale;
+    final int screenWidth = maxScreenCol * tileSize;
+    final int screenHeight = maxScreenRow * tileSize; 
 
-	private SoundManager soundManager;
-	boolean[] directions = {false, false, false, false};
-	private final int FPS = 60;
+    private final KeyHandler key = new KeyHandler();
 
-	private boolean isRunning;
-	private boolean isPaused;
+    Thread gameThread;
 
-	private Thread gameThread;
-
-	private BufferedImage image;
- 	private Image backgroundImage;
-
-	// private BirdAnimation animation;
-	//private StripAnimation animation;
-	private volatile boolean isAnimShown;
-	private volatile boolean isAnimPaused;
-
-	// private ImageEffect imageEffect;		// sprite demonstrating an image effect
-
-	private TileMapManager tileManager;
-	private TileMap	tileMap;
-
-	private boolean levelChange;
-	private int level;
-	private boolean gameOver;
-
-	public GamePanel () {
-
-		isRunning = false;
-		isPaused = false;
-		isAnimShown = false;
-		isAnimPaused = false;
+    // World variables
+    public final int worldCol = 74;
+    public final int worldRow = 55;
+    public final int worldWidth = worldCol * tileSize;
+    public final int worldHeight = worldRow * tileSize;
+    //private final int maxMap = 500;
 
 
-		soundManager = SoundManager.getInstance();
-
-		image = new BufferedImage (1200, 700, BufferedImage.TYPE_INT_RGB);
-
-		level = 1;
-		levelChange = false;
-	}
+    // Sound variables
+    private SoundManager sm;
 
 
-	public void createGameEntities() {
-		//animation = new StripAnimation();
-		// imageEffect = new ImageEffect (this);
-	}
+    // Player variables
+    public Hunt player = new Hunt(this, key);
+    public AssertObjects ao = new AssertObjects(this);
+    public CollisionChecker cc = new CollisionChecker(this);
+    public TileMapManagerHelp tmm = new TileMapManagerHelp(this);
+    public Objects obj[] = new Objects[10];
+
+    public UI ui = new UI(this);
+
+    //FPS
+    private int FPS = 60;
+
+    public GamePanel(){
+        this.setPreferredSize(new Dimension(getScreenWidth(), getScreenHeight()));
+        System.out.println("Screen Width: " + screenWidth + " Screen Height: " + screenHeight);
+        this.setDoubleBuffered(true);
+        this.addKeyListener(key);
+        this.setFocusable(true);
+        System.out.println("Get Screen Width: " + getScreenWidth() + " Get Screen Height: " + getScreenHeight());
+        System.out.println("Get World Width: " + getWorldWidth() + " Get World Height: " + getWorldHeight());
+        System.out.println("Get World Col: " + getWorldCol() + " Get World Row: " + getWorldRow());
+
+        sm = SoundManager.getInstance();
+    }
+
+    public void startGameThread(){
+        gameThread = new Thread(this);
+        gameThread.start();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                requestFocusInWindow();
+            }
+        });
+    }
 
 
-	public void run() {
-		double drawInterval = 1000000000 / FPS;
-		double delta = 0;
-		long lastTime = System.nanoTime();
-		long currentTime;
-		long timer = 0;
-		int frames = 0;
-	
-		isRunning = true;
-		while (isRunning) {
-			currentTime = System.nanoTime();
-			delta += (currentTime - lastTime) / drawInterval;
-			timer += (currentTime - lastTime);
-			lastTime = currentTime;
+    public void run(){
+        double drawInterval = 1000000000 / FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+        long timer = 0;
+        int frames = 0;
 
-			if (delta >= 1) {
-				if (!isPaused && !gameOver) {
-					gameUpdate(); // Assuming gameUpdate() is equivalent to the update() method in RPG
-				}
-				gameRender(); // Assuming gameRender() is equivalent to the repaint() method in RPG
-				delta--;
-				frames++;
-			}
+        while(gameThread != null){
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
+            timer += (currentTime - lastTime);
+            lastTime = currentTime;
 
-			if (timer >= 1000000000) {
-				System.out.println("FPS: " + frames);
-				frames = 0;
-				timer = 0;
-			}
-		}
-	}
-	
+            if(delta >= 1){
+                update();
+                repaint();
+                delta--;
+                frames++;
+            }
 
-
-	public void gameUpdate() {
-
-		tileMap.moveLeft(directions);
-		tileMap.update();
-
-		if (levelChange) {
-			levelChange = false;
-			tileManager = new TileMapManager (this);
-
-			try {
-				String filename = "Game/maps/map4" + level + ".txt";
-				tileMap = tileManager.loadMap(filename) ;
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
-				System.out.println ("Changing level to Level " + level);
-				System.out.println ("Width of tilemap " + w);
-				System.out.println ("Height of tilemap " + h);
-			}
-			catch (Exception e) {		// no more maps: terminate game
-				gameOver = true;
-				System.out.println(e);
-				System.out.println("Game Over"); 
-				return;
-/*
-				System.exit(0);
-*/
-			}
-
-			createGameEntities();
-			return;
-				
-		}
-
-		//animation.update();
-		if (!isPaused && isAnimShown){
-			// animation.update();
+            if(timer >= 1000000000){
+                System.out.println("FPS: " + frames);
+                frames = 0;
+                timer = 0;
+            }
         }
-		// imageEffect.update();
-	}
+        
+    }
+
+    public void gameSetup(){
+        ao.setObjects();
+        sm.setVolume("level1_loop", 0.2f);
+        sm.playClip("level1_loop", true);
+    }
 
 
-	public void gameRender() {
 
-		// draw the game objects on the image
+    public void update(){
+        player.update();
+    }
 
-		Graphics2D imageContext = (Graphics2D) image.getGraphics();
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);  
+        Graphics2D g2 = (Graphics2D) g;
+        tmm.draw(g2);
 
-		tileMap.draw (imageContext);
-
-		//animation.draw(imageContext);
-		if (isAnimShown){
-			// animation.draw(imageContext);		// draw the animation
+        for(int i = 0; i < obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2, this);
+            }
         }
-		//imageEffect.draw(imageContext);			// draw the image effect
 
-		if (gameOver) {
-			Color darken = new Color (0, 0, 0, 125);
-			imageContext.setColor (darken);
-			imageContext.fill (new Rectangle2D.Double (0, 0, 600, 500));
-		}
-
-		Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for the panel
-		g2.drawImage(image, 0, 0, 600, 500, null);	// draw the image on the graphics context
-
-		imageContext.dispose();
-	}
+        player.draw(g2);
+        ui.draw(g2);
+        g2.dispose();
+    }
 
 
-	public void startGame() {				// initialise and start the game thread 
+    public int getTileSize(){
+        return tileSize;
+    }
 
-		if (gameThread == null) {
-			//soundManager.playSound ("background", true);
+    public int getScreenWidth(){
+        return screenWidth;
+    }
 
-			gameOver = false;
+    public int getScreenHeight(){
+        return screenHeight;
+    }
 
-			tileManager = new TileMapManager (this);
+    public int getWorldWidth(){
+        return worldWidth;
+    }
 
-			try {
-				tileMap = tileManager.loadMap("Game/maps/map4.txt");
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
-				System.out.println ("Width of tilemap " + w);
-				System.out.println ("Height of tilemap " + h);
-			}
-			
-			catch (Exception e) {
-				System.out.println(e);
-				System.exit(0);
-			}
+    public int getWorldHeight(){
+        return worldHeight;
+    }
 
-			createGameEntities();
+    public int getWorldCol(){
+        return worldCol;
+    }
 
-			gameThread = new Thread(this);
-			gameThread.start();			
+    public int getWorldRow(){
+        return worldRow;
+    }
 
-		}
-	}
+    public int getScreenCol(){
+        return maxScreenCol;
+    }
 
+    public int getScreenRow(){
+        return maxScreenRow;
+    }
 
-	public void startNewGame() {				// initialise and start a new game thread 
-		if (gameThread != null || !isRunning) {
-			//soundManager.playSound ("background", true);
+    public KeyHandler getKeyHandler(){
+        return key;
+    }
+    
+    public Hunt getPlayer(){
+        return player;
+    }
 
-			endGame();
+    public int getOriginalSize(){
+        return originalSize;
+    }
 
-			gameOver = false;
-			level = 1;
-
-			tileManager = new TileMapManager (this);
-
-			try {
-				tileMap = tileManager.loadMap("Game/maps/map4.txt");
-				int w, h;
-				w = tileMap.getWidth();
-				h = tileMap.getHeight();
-				System.out.println ("Width of tilemap " + w);
-				System.out.println ("Height of tilemap " + h);
-			}
-			catch (Exception e) {
-				System.out.println(e);
-				System.exit(0);
-			}
-
-			createGameEntities();
-
-			gameThread = new Thread(this);
-			gameThread.start();			
-
-		}
-	}
-
-
-	public void pauseGame() {				// pause the game (don't update game entities)
-		if (isRunning) {
-			if (isPaused)
-				isPaused = false;
-			else
-				isPaused = true;
-
-			if (isAnimShown) {
-				// if (isPaused)
-				// 	animation.stopSound();
-				// else
-				// 	animation.playSound();
-			}
-		}
-	}
-
-
-	public void endGame() {					// end the game thread
-		isRunning = false;
-		//soundManager.stopClip ("background");
-	}
-
-	
-	public void moveLeft(boolean[] directions) {
-		if (!gameOver)
-			tileMap.moveLeft(directions);
-	}
-
-
-	public void moveRight(boolean[] directions) {
-		if (!gameOver)
-			tileMap.moveRight(directions);
-	}
-
-	public void stopMoveLeft(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopMoveLeft(directions);
-	}
-
-
-	public void stopMoveRight(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopMoveRight(directions);
-	}
-
-
-	public void jump(boolean[] directions) {
-		if (!gameOver)
-			tileMap.jump(directions);
-	}
-	public void stopJump(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopJump(directions);
-	}
-
-	
-	// public void showAnimation() {
-	// 	isAnimShown = true;
-	// 	animation.start();
-		
-	// }
-
-
-	public void endLevel() {
-		level = level + 1;
-		levelChange = true;
-	}
-
-	public void setDirections(boolean[] directions) {
-		if(directions[1] && directions[2]){ directions[1] = false;} // prioritize goinf right over left to avoid bad movement
-		this.directions = directions;
-	}
+    public SoundManager getSoundManager(){
+        return sm;
+    }
 
 }
