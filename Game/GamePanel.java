@@ -196,11 +196,6 @@ public class GamePanel extends JPanel implements Runnable {
 				
 		}
 
-		//animation.update();
-		if (!isPaused && isAnimShown){
-			// animation.update();
-        }
-		// imageEffect.update();
 	}
 
 
@@ -356,10 +351,10 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 
-	/* public void endGame() {					// end the game thread
+	 public void endGame() {					// end the game thread
 		isRunning = false;
 		//soundManager.stopClip ("background");
-	} */
+	} 
 
 	
 	public void moveLeft(boolean[] directions) {
@@ -368,10 +363,10 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 
-	/* public void endLevel() {
+	public void endLevel() {
 		level = level + 1;
 		levelChange = true;
-	} */
+	}
 
 	public void setDirections(boolean[] directions) {
 		if(directions[1] && directions[2]){ directions[1] = false;} // prioritize goinf right over left to avoid bad movement
