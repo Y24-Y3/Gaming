@@ -239,34 +239,6 @@ public class GamePanel extends JPanel
 			tileMap.moveLeft(directions);
 	}
 
-
-	public void moveRight(boolean[] directions) {
-		if (!gameOver)
-			tileMap.moveRight(directions);
-	}
-
-	public void stopMoveLeft(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopMoveLeft(directions);
-	}
-
-
-	public void stopMoveRight(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopMoveRight(directions);
-	}
-
-
-	public void jump(boolean[] directions) {
-		if (!gameOver)
-			tileMap.jump(directions);
-	}
-	public void stopJump(boolean[] directions) {
-		if (!gameOver)
-			tileMap.stopJump(directions);
-	}
-
-	
 	// public void showAnimation() {
 	// 	isAnimShown = true;
 	// 	animation.start();
