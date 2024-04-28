@@ -157,7 +157,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
 		}
 		//else
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            directions[2] = true;;
+            directions[2] = true;
 			gamePanel.setDirections(directions);
 		}
         //else
