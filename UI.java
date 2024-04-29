@@ -36,7 +36,7 @@ public class UI {
         g2.drawString("Time: " + getTime(), 900, 20);
         image = gp.getPlayer().getImage();
         g2.drawImage(image, 940, 30, gp.getTileSize(), gp.getTileSize(), null);
-        g2.drawString(" X " + gp.getPlayer().getHealth(), 900, 70);
+        g2.drawString(" X " + gp.getPlayer().getLife(), 900, 70);
 
         //Title Screen
         if(gp.gameState == gp.getMenuState()){
