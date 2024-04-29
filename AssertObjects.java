@@ -43,6 +43,14 @@ public class AssertObjects {
         gp.hostile[5] = new Bear(gp);
         gp.hostile[5].Worldx = gp.getTileSize() * 52;
         gp.hostile[5].Worldy = gp.getTileSize() * 26;
+
+        gp.hostile[6] = new Bear(gp);
+        gp.hostile[6].Worldx = gp.getTileSize() * 52;
+        gp.hostile[6].Worldy = gp.getTileSize() * 12;
+
+        gp.hostile[7] = new Bear(gp);
+        gp.hostile[7].Worldx = gp.getTileSize() * 38;
+        gp.hostile[7].Worldy = gp.getTileSize() * 12;
     }
 
     public void setNeutral(){

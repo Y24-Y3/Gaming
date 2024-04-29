@@ -2,6 +2,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 public class Hunt extends Entities{
 
@@ -11,7 +14,9 @@ public class Hunt extends Entities{
     public int screenX = 0;
     public  int screenY = 0;
     private int health = 10;
+    public int life = health;
     public int hasKey = 0;
+    private int hostilesKilled =0, neutralsKilled = 0;
     GameWindow window;
 
 
@@ -124,6 +129,7 @@ public class Hunt extends Entities{
                 if (bear.life <= 0) {
                     isDead = true;
                     gp.hostile[i] = null;
+                    hostilesKilled++;
                     gp.ui.showMessage("you have slain a bear!");
                 }
             }
@@ -135,6 +141,7 @@ public class Hunt extends Entities{
                 deer.life -= 1;
                 if (deer.life <= 0) {
                     gp.neutral[i] = null;
+                    neutralsKilled++;
                     gp.ui.showMessage("you have slain a deer!");
                 }
             }
@@ -160,7 +167,7 @@ public class Hunt extends Entities{
         // Check if the player is within a certain distance from the deer
         int distanceX = Math.abs(Worldx - neutral.Worldx);
         int distanceY = Math.abs(Worldy - neutral.Worldy);
-        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+        int attackRange = gp.getTileSize()+3; // Adjust the attack range as needed
     
         return (distanceX <= attackRange && distanceY <= attackRange);
     }
@@ -169,7 +176,7 @@ public class Hunt extends Entities{
         // Check if the player is within a certain distance from the bear
         int distanceX = Math.abs(Worldx - hostile.Worldx);
         int distanceY = Math.abs(Worldy - hostile.Worldy);
-        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+        int attackRange = gp.getTileSize()+3; // Adjust the attack range as needed
     
         return (distanceX <= attackRange && distanceY <= attackRange);
     }
@@ -185,10 +192,9 @@ public class Hunt extends Entities{
                     gp.obj[index] = null;
                     gp.ui.showMessage("You have found the Skull key!");
                     break;
-                // Further implementation of other objects and entities. If has Key and 5 bear entities and 2 deer entities killed, move to the next level.
                 case "Boat":
                     gp.gameState = gp.dialoueState;
-                    if(hasKey == 1){
+                    if(hasKey == 1 && hostilesKilled >= 5 && neutralsKilled >= 2){
                         //gp.ui.showMessage("You have escaped the island!");
                         gp.getSoundManager().stopClip("level1_loop");
                         gp.getSoundManager().playClip("level2_intro", false);
@@ -197,7 +203,7 @@ public class Hunt extends Entities{
                         //gp.ui.getLevelComplete();
                     }
                     else{
-                        gp.ui.Mission = "The is broken. Return to the island and find the key.";
+                        gp.ui.Mission = "The boat is broken, Defeat 5 Bears, 2 Deers and find the Skull Key! [Enter....]";
                     }
                     break;
             }
@@ -207,43 +213,78 @@ public class Hunt extends Entities{
     
 
     public void Image(){
-        walking = new StripAnimation("images//character//Walk.png", 7, 100);
-        idle = new StripAnimation("images//character//Idle.png", 8, 100);
-        die = new StripAnimation("images//character//dieNob.png", 5, 200);
-        attack = new StripAnimation("images//character//attackNob.png", 4, 100);
+        walking = new StripAnimation("images//character//Walk.png", 7, 50);
+        idle = new StripAnimation("images//character//Idle.png", 8, 50);
+        die = new StripAnimation("images//character//dieNob.png", 5, 75);
+        attack = new StripAnimation("images//character//attackNob.png", 4, 90);
     }
 
 
 
-    public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d) {
         int size = gp.getTileSize() * 2;
-
-        // Draw the player
-        if(isDead){
-            die.draw(g2d, screenX, screenY, size, size);
-        }else{
-        if(direction == "up"){
-            walking.draw(g2d, screenX, screenY, size, size);
+        BufferedImage image = null;
+    
+        if (isDead) {
+            image = die.getImage();
+        } else {
+            switch (direction) {
+                case "up":
+                    image = walking.getImage();
+                    image = rotateImageByDegrees(image, 270);
+                    break;
+                case "down":
+                    image = walking.getImage();
+                    image = rotateImageByDegrees(image, 90);
+                    break;
+                case "left":
+                    image = walking.getImage();
+                    image = flipImageHorizontally(image);
+                    break;
+                case "right":
+                    image = walking.getImage();
+                    break;
+                default:
+                    image = idle.getImage();
+                    break;
+            }
         }
-        else if(direction == "down"){
-            walking.draw(g2d, screenX, screenY,size, size);
-        }
-        else if(direction == "left"){
-            walking.draw(g2d, screenX, screenY,size, size);
-        }
-        else if(direction == "right"){
-            walking.draw(g2d, screenX, screenY,size, size);
-        }
-        else if(direction == "attack"){
-            attack.draw(g2d, screenX, screenY,size, size);
-        }
-        else{
-            idle.draw(g2d, screenX, screenY,size, size );
-        }
-    }
+    
+        g2d.drawImage(image, screenX, screenY, size, size, null);
         //g2d.setColor(Color.RED);
         //g2d.drawRect(screenX, screenY, size, size);
+    }
+    
+    private BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {
+        double rads = Math.toRadians(angle);
+        double sin = Math.abs(Math.sin(rads));
+        double cos = Math.abs(Math.cos(rads));
+        int w = img.getWidth();
+        int h = img.getHeight();
+        int newWidth = (int) Math.floor(w * cos + h * sin);
+        int newHeight = (int) Math.floor(h * cos + w * sin);
+    
+        BufferedImage rotated = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.translate((newWidth - w) / 2, (newHeight - h) / 2);
+        at.rotate(rads, w / 2, h / 2);
+    
+        AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        rotateOp.filter(img, rotated);
+    
+        return rotated;
+    }
 
+    private BufferedImage flipImageHorizontally(BufferedImage img) {
+        int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage flipped = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        for (int y = 0; y < h; y++) {
+            for (int x = 0; x < w; x++) {
+                flipped.setRGB(w - x - 1, y, img.getRGB(x, y));
+            }
+        }
+        return flipped;
     }
 
 
@@ -271,7 +312,20 @@ public class Hunt extends Entities{
         return idle.getImage();
     }
 
+    public int getLife(){
+        return life;
+    }
+
     public void changeLevel(){
         window.startLevel2();
     }
+
+    public int hostilesKilled(){
+        return hostilesKilled;
+    }
+
+    public int neutralsKilled(){
+        return neutralsKilled;
+    }
+    
 }

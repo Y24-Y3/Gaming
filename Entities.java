@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 public class Entities {
 
@@ -93,8 +95,8 @@ public class Entities {
                     break;
             }
 
-            g2.setColor(Color.RED);
-            g2.drawRect(ScreenX, ScreenY, size, size);
+            //g2.setColor(Color.RED);
+            //g2.drawRect(ScreenX, ScreenY, size, size);
         }
     }
 

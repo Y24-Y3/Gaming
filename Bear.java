@@ -7,6 +7,7 @@ import java.util.Random;
 public class Bear extends Entities{
 
     private StripAnimation idle, run, attack1, attack2, die;
+    private StripAnimation Attackani;
 
     public Bear(GamePanel gp){
     super(gp);
@@ -18,23 +19,23 @@ public class Bear extends Entities{
     direction = "down";
 
     boundingBox = new Rectangle();
-    boundingBox.x = 8;
-    boundingBox.y = 10;
+    boundingBox.x = 15;
+    boundingBox.y = 0;
     boundingBox.width = 8;
     boundingBox.height = 0;
-    boundsX = boundingBox.x + 10;
-    boundsY = boundingBox.y + 10;
+    boundsX = boundingBox.x + 20;
+    boundsY = boundingBox.y + 20;
     Image();
-    anim = idle;
+    anim = run;
     
     }
 
     public void Image(){
-        idle = new StripAnimation("images//sprites//Bear_Idle.png", 12, 100);
-        run = new StripAnimation("images//sprites//Bear_Run.png", 5, 100);
-        attack1 = new StripAnimation("images//sprites//beer_attack1.png", 9, 120);
-        attack2 = new StripAnimation("images//sprites//beer_attack2.png", 9, 120);
-        die = new StripAnimation("images//sprites//beer_dead.png", 9, 200);
+        idle = new StripAnimation("images//sprites//Bear_Idle.png", 12, 50);
+        run = new StripAnimation("images//sprites//Bear_Run.png", 5, 50);
+        attack1 = new StripAnimation("images//sprites//beer_attack1.png", 9, 50);
+        attack2 = new StripAnimation("images//sprites//beer_attack2.png", 9, 50);
+        die = new StripAnimation("images//sprites//beer_dead.png", 9, 50);
     }
 
 
@@ -42,7 +43,7 @@ public class Bear extends Entities{
         actionCounter++;
 
 
-        if(actionCounter == 150){
+        if(actionCounter == 250){
             Random ran = new Random();
             int action = ran.nextInt(100)+1;
 
@@ -60,7 +61,8 @@ public class Bear extends Entities{
                 direction = "right";
             }
             if (canAttackPlayer(gp.player)) {
-                direction = "attack1";
+                direction = "attack";
+                Attackani = attack2;
                 attackPlayer(gp.getPlayer());
             }
 
@@ -70,15 +72,11 @@ public class Bear extends Entities{
         
     }
 
-    public StripAnimation getAnim(){
-        return anim;
-    }
-
 
     private boolean canAttackPlayer(Hunt player) {
         int distanceX = Math.abs(Worldx - player.getWorldX());
         int distanceY = Math.abs(Worldy - player.getWorldY());
-        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+        int attackRange = gp.getTileSize() +10 ; // Adjust the attack range as needed
     
         return (distanceX <= attackRange && distanceY <= attackRange);
     }
@@ -96,10 +94,11 @@ public class Bear extends Entities{
         int ScreenY = Worldy - gp.player.Worldy + gp.player.screenY;
         int size = gp.getTileSize();
     
+        StripAnimation anim = getAnim();
+    
         if (life <= 0) {
-            die.draw(g2d, ScreenX, ScreenY, size, size);
+            die.draw(g2d, ScreenX, ScreenY, size*2, size*2);
         } else {
-            // Draw the bear as usual
             switch (direction) {
                 case "up":
                     anim.draw(g2d, ScreenX, ScreenY, size, size);
@@ -113,10 +112,22 @@ public class Bear extends Entities{
                 case "right":
                     anim.draw(g2d, ScreenX, ScreenY, size, size);
                     break;
+                case "attack":
+                    anim.draw(g2d, ScreenX, ScreenY, size*2, size*2);
+                    break;
             }
     
-            g2d.setColor(Color.RED);
-            g2d.drawRect(ScreenX, ScreenY, size, size);
+            //g2d.setColor(Color.RED);
+            //g2d.drawRect(ScreenX, ScreenY, size, size);
+        }
+    }
+
+    public StripAnimation getAnim(){
+        if(direction == "attack"){
+            return Attackani;
+        }
+        else{
+            return anim;
         }
     }
 
