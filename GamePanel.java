@@ -136,13 +136,21 @@ public class GamePanel extends JPanel implements Runnable{
 
             for(int i = 0; i < hostile.length; i++){
                 if(hostile[i] != null){
-                    //hostile[i].update();
+                    hostile[i].update();
+
+                    //cc.checkEntity(hostile[i], hostile);
+                    //cc.checkEntity(hostile[i], neutral); 
+                    //cc.checkTile(hostile[i]);               
                 }
             }
 
             for(int i = 0; i < neutral.length; i++){
                 if(neutral[i] != null){
-                    //neutral[i].update();
+                    neutral[i].update();
+
+                    //cc.checkEntity(neutral[i], hostile);
+                    //cc.checkEntity(neutral[i], neutral);
+                    //cc.checkTile(neutral[i]);
                 } 
             }
         }
@@ -183,7 +191,7 @@ public class GamePanel extends JPanel implements Runnable{
             }
             for(int i = 0; i < neutral.length; i++){
                 if(neutral[i] != null){
-                    //neutral[i].draw(g2);
+                    neutral[i].draw(g2);
                 }
             }
     

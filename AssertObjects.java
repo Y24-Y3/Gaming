@@ -20,34 +20,43 @@ public class AssertObjects {
     }
 
     public void setHostile(){
-        //gp.hostile[0] = new Bear(gp);
-        //gp.hostile[0].Worldx = gp.getTileSize() * 15;
-        //gp.hostile[0].Worldy = gp.getTileSize() * 36;
+        gp.hostile[0] = new Bear(gp);
+        gp.hostile[0].Worldx = gp.getTileSize() * 18;
+        gp.hostile[0].Worldy = gp.getTileSize() * 29;
 
-        Random ran = new Random();
-        int loc = ran.nextInt(40) + 1;
+        gp.hostile[1] = new Bear(gp);
+        gp.hostile[1].Worldx = gp.getTileSize() * 33;
+        gp.hostile[1].Worldy = gp.getTileSize() * 19;
 
-        for(int i = 0; i < gp.hostile.length; i++){
-            gp.hostile[i] = new Bear(gp);
-            gp.hostile[i].Worldx = gp.getTileSize() * loc;
-            gp.hostile[i].Worldy = gp.getTileSize() * loc;
-        }
+        gp.hostile[2] = new Bear(gp);
+        gp.hostile[2].Worldx = gp.getTileSize() * 38;
+        gp.hostile[2].Worldy = gp.getTileSize() * 29;
 
+        gp.hostile[3] = new Bear(gp);
+        gp.hostile[3].Worldx = gp.getTileSize() * 38;
+        gp.hostile[3].Worldy = gp.getTileSize() * 42;
+
+        gp.hostile[4] = new Bear(gp);
+        gp.hostile[4].Worldx = gp.getTileSize() * 52;
+        gp.hostile[4].Worldy = gp.getTileSize() * 42;
+
+        gp.hostile[5] = new Bear(gp);
+        gp.hostile[5].Worldx = gp.getTileSize() * 52;
+        gp.hostile[5].Worldy = gp.getTileSize() * 26;
     }
 
     public void setNeutral(){
-        //gp.neutral[0] = new Deer(gp);
-        //gp.neutral[0].Worldx = gp.getTileSize() * 15;
-        //gp.neutral[0].Worldy = gp.getTileSize() * 36;
+        gp.neutral[0] = new Deer(gp);
+        gp.neutral[0].Worldx = gp.getTileSize() * 15;
+        gp.neutral[0].Worldy = gp.getTileSize() * 36;
 
-        Random ran = new Random();
-        int loc = ran.nextInt(40) + 1;
+        gp.neutral[1] = new Deer(gp);
+        gp.neutral[1].Worldx = gp.getTileSize() * 15;
+        gp.neutral[1].Worldy = gp.getTileSize() * 12;
 
-        for(int i = 0; i < gp.neutral.length; i++){
-            gp.neutral[i] = new Deer(gp);
-            gp.neutral[i].Worldx = gp.getTileSize() * loc;
-            gp.neutral[i].Worldy = gp.getTileSize() * loc;
-        }
+        gp.neutral[2] = new Deer(gp);
+        gp.neutral[2].Worldx = gp.getTileSize() * 25;
+        gp.neutral[2].Worldy = gp.getTileSize() * 12;
 
     }
 }

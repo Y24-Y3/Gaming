@@ -22,8 +22,8 @@ public class Bear extends Entities{
     boundingBox.y = 10;
     boundingBox.width = 8;
     boundingBox.height = 0;
-    boundsX = boundingBox.x;
-    boundsY = boundingBox.y;
+    boundsX = boundingBox.x + 10;
+    boundsY = boundingBox.y + 10;
     Image();
     anim = idle;
     
@@ -42,7 +42,7 @@ public class Bear extends Entities{
         actionCounter++;
 
 
-        if(actionCounter == 105){
+        if(actionCounter == 150){
             Random ran = new Random();
             int action = ran.nextInt(100)+1;
 
@@ -59,8 +59,11 @@ public class Bear extends Entities{
             else if(action > 75 && action <= 100){
                 direction = "right";
             }
-            //System.out.println("Action: " + action);
-            //System.out.println("Action Counter: " + actionCounter);
+            if (canAttackPlayer(gp.player)) {
+                direction = "attack1";
+                attackPlayer(gp.getPlayer());
+            }
+
             actionCounter = 0;
             
         }
@@ -69,6 +72,23 @@ public class Bear extends Entities{
 
     public StripAnimation getAnim(){
         return anim;
+    }
+
+
+    private boolean canAttackPlayer(Hunt player) {
+        int distanceX = Math.abs(Worldx - player.getWorldX());
+        int distanceY = Math.abs(Worldy - player.getWorldY());
+        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+    
+        return (distanceX <= attackRange && distanceY <= attackRange);
+    }
+
+    public void attackPlayer(Hunt player) {
+        player.life -= 1; // Decrement the life of the player
+        if (player.life <= 0) {
+            player.isDead = true;
+            gp.ui.Mission = "You have been defeated by the Bear. Game Over!";
+        }
     }
 
     

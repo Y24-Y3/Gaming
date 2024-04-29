@@ -14,6 +14,7 @@ public class Hunt extends Entities{
     public int hasKey = 0;
 
 
+
     public Hunt(GamePanel gp, KeyHandler key){
         super(gp);
 
@@ -41,7 +42,7 @@ public class Hunt extends Entities{
     public void setDefaultValues(){
         Worldx = gp.getTileSize() * 15;
         Worldy = gp.getTileSize() * 45;
-        speed = 16;
+        speed = 4;
         direction = "idle";
     }
 
@@ -70,6 +71,18 @@ public class Hunt extends Entities{
             directionKeyPressed = true;
             //gp.getSoundManager().playClip("walking1", false);
 
+        }
+
+        if(key.attack){
+            direction = "attack";
+            directionKeyPressed = true;
+            attack();
+            if(directionKeyPressed){
+                key.attack = false;
+            }else{
+                direction = "idle";
+            
+            }
         }
     
         // Only set to idle if no direction key is pressed
@@ -100,18 +113,66 @@ public class Hunt extends Entities{
         //System.out.println("Worldx: " + Worldx + " Worldy: " + Worldy);
     }
 
-    public void Battle(int index){
-        if(index != 99){
-           /*  if(gp.hostile[index].health > 0){
-                gp.hostile[index].health -= 1;
-                gp.ui.showMessage("You have killed a creature!");
+
+    public void attack() {
+        for (int i = 0; i < gp.hostile.length; i++) {
+            if (gp.hostile[i] != null && gp.hostile[i] instanceof Bear && canAttackBear(gp.hostile[i])) {
+                Bear bear = (Bear) gp.hostile[i];
+                bear.life -= 1;
+                if (bear.life <= 0) {
+                    isDead = true;
+                    gp.hostile[i] = null;
+                    gp.ui.showMessage("you have slain a bear!");
+                }
             }
-            else{
-                gp.hostile[index] = null;
-                gp.ui.showMessage("You have killed a creature!");
-            } */
+        }
+    
+        for (int i = 0; i < gp.neutral.length; i++) {
+            if (gp.neutral[i] != null && gp.neutral[i] instanceof Deer && canAttackDeer(gp.neutral[i])) {
+                Deer deer = (Deer) gp.neutral[i];
+                deer.life -= 1;
+                if (deer.life <= 0) {
+                    gp.neutral[i] = null;
+                    gp.ui.showMessage("you have slain a deer!");
+                }
+            }
         }
     }
+
+
+    public void Battle(int index){
+        if(index != 99){
+            if (index != 99 && gp.hostile[index] != null) {
+                Entities bear = gp.hostile[index];
+                bear.life -= 1; // Decrement the life of the Bear
+                if (bear.life <= 0) {
+                    gp.hostile[index] = null; // Remove the Bear from the game
+                    // Add any additional logic for handling a defeated Bear
+                }
+            }
+        
+        }
+    }
+
+    public boolean canAttackDeer(Entities neutral) {
+        // Check if the player is within a certain distance from the deer
+        int distanceX = Math.abs(Worldx - neutral.Worldx);
+        int distanceY = Math.abs(Worldy - neutral.Worldy);
+        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+    
+        return (distanceX <= attackRange && distanceY <= attackRange);
+    }
+
+    private boolean canAttackBear(Entities hostile) {
+        // Check if the player is within a certain distance from the bear
+        int distanceX = Math.abs(Worldx - hostile.Worldx);
+        int distanceY = Math.abs(Worldy - hostile.Worldy);
+        int attackRange = gp.getTileSize(); // Adjust the attack range as needed
+    
+        return (distanceX <= attackRange && distanceY <= attackRange);
+    }
+
+
 
     public void Interact(int index){
         if(index !=99){
@@ -129,7 +190,7 @@ public class Hunt extends Entities{
                         //gp.ui.showMessage("You have escaped the island!");
                         gp.getSoundManager().stopClip("level1_loop");
                         gp.getSoundManager().playClip("level2_intro", false);
-
+                        
                         //gp.ui.getLevelComplete();
                     }
                     else{
@@ -168,6 +229,9 @@ public class Hunt extends Entities{
         }
         else if(direction == "right"){
             walking.draw(g2d, screenX, screenY,size, size);
+        }
+        else if(direction == "attack"){
+            attack.draw(g2d, screenX, screenY,size, size);
         }
         else{
             idle.draw(g2d, screenX, screenY,size, size );

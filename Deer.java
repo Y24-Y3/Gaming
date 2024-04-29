@@ -14,7 +14,7 @@ public class Deer extends Entities {
     direction = "right";
 
     
-    speed = 8;
+    speed = 7;
     maxLife = 8;
     life = maxLife;
     
@@ -42,7 +42,7 @@ public class Deer extends Entities {
         actionCounter++;
 
         
-        if(actionCounter == 150){
+        if(actionCounter == 125){
             Random ran = new Random();
             int action = ran.nextInt(100)+1;
 

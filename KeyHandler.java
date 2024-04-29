@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
 
-    public boolean up, down, left, right;
+    public boolean up, down, left, right, attack;
     public boolean debugger = false;
     private GamePanel gp;
 
@@ -50,7 +50,7 @@ public class KeyHandler implements KeyListener{
             }
         }
         if(keyCode == KeyEvent.VK_SPACE){
-            //attack
+            attack = true;
         }
     }
     
