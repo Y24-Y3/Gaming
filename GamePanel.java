@@ -285,5 +285,15 @@ public class GamePanel extends JPanel implements Runnable{
     public int getPauseState(){
         return pauseState;
     }
+
+    public void togglePauseState(){
+        if(gameState == pauseState){
+            gameState = playState;
+        }else{
+            gameState = pauseState;
+        }
+
+        return;
+    }
     
 }

@@ -159,6 +159,8 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         
             if (level == 2) {
                 gamePanel.pauseGame();
+            }else{
+                gp.togglePauseState();
             }
         }
         if(e.getSource() == restart){
