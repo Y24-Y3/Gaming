@@ -6,7 +6,6 @@ import java.awt.Rectangle;
 public class Entities {
 
     public GamePanel gp;
-    public GameWindow2 gw2;
 
 
     public int Worldx, Worldy;
