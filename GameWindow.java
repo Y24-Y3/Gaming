@@ -267,6 +267,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         gp.endGameThread();
         gamePanel.startGame();
         cardLayout.show(cardPanel, "gamePanel2");
+        main.requestFocus();
         return;
     }
     

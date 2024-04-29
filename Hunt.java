@@ -192,6 +192,7 @@ public class Hunt extends Entities{
                         //gp.ui.showMessage("You have escaped the island!");
                         gp.getSoundManager().stopClip("level1_loop");
                         gp.getSoundManager().playClip("level2_intro", false);
+                        changeLevel();
                         
                         //gp.ui.getLevelComplete();
                     }
