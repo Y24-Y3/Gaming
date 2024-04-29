@@ -95,8 +95,8 @@ public class Entities {
                     break;
             }
 
-            g2.setColor(Color.RED);
-            g2.drawRect(ScreenX, ScreenY, size, size);
+            //g2.setColor(Color.RED);
+            //g2.drawRect(ScreenX, ScreenY, size, size);
         }
     }
 

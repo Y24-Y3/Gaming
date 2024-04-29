@@ -19,23 +19,23 @@ public class Bear extends Entities{
     direction = "down";
 
     boundingBox = new Rectangle();
-    boundingBox.x = 8;
-    boundingBox.y = 10;
+    boundingBox.x = 15;
+    boundingBox.y = 0;
     boundingBox.width = 8;
     boundingBox.height = 0;
-    boundsX = boundingBox.x + 10;
-    boundsY = boundingBox.y + 10;
+    boundsX = boundingBox.x + 20;
+    boundsY = boundingBox.y + 20;
     Image();
     anim = run;
     
     }
 
     public void Image(){
-        idle = new StripAnimation("images//sprites//Bear_Idle.png", 12, 100);
-        run = new StripAnimation("images//sprites//Bear_Run.png", 5, 500);
-        attack1 = new StripAnimation("images//sprites//beer_attack1.png", 9, 100);
-        attack2 = new StripAnimation("images//sprites//beer_attack2.png", 9, 400);
-        die = new StripAnimation("images//sprites//beer_dead.png", 9, 500);
+        idle = new StripAnimation("images//sprites//Bear_Idle.png", 12, 50);
+        run = new StripAnimation("images//sprites//Bear_Run.png", 5, 50);
+        attack1 = new StripAnimation("images//sprites//beer_attack1.png", 9, 50);
+        attack2 = new StripAnimation("images//sprites//beer_attack2.png", 9, 50);
+        die = new StripAnimation("images//sprites//beer_dead.png", 9, 50);
     }
 
 
@@ -117,8 +117,8 @@ public class Bear extends Entities{
                     break;
             }
     
-            g2d.setColor(Color.RED);
-            g2d.drawRect(ScreenX, ScreenY, size, size);
+            //g2d.setColor(Color.RED);
+            //g2d.drawRect(ScreenX, ScreenY, size, size);
         }
     }
 

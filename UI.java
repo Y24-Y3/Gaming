@@ -37,6 +37,8 @@ public class UI {
         image = gp.getPlayer().getImage();
         g2.drawImage(image, 940, 30, gp.getTileSize(), gp.getTileSize(), null);
         g2.drawString(" X " + gp.getPlayer().getLife(), 900, 70);
+        g2.drawString(" X " + gp.getPlayer().hostilesKilled(), 900, 90);
+        g2.drawString(" X " + gp.getPlayer().neutralsKilled(), 900, 110);
 
         //Title Screen
         if(gp.gameState == gp.getMenuState()){

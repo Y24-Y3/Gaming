@@ -16,6 +16,7 @@ public class Hunt extends Entities{
     private int health = 10;
     public int life = health;
     public int hasKey = 0;
+    private int hostilesKilled =0, neutralsKilled = 0;
     GameWindow window;
 
 
@@ -128,6 +129,7 @@ public class Hunt extends Entities{
                 if (bear.life <= 0) {
                     isDead = true;
                     gp.hostile[i] = null;
+                    hostilesKilled++;
                     gp.ui.showMessage("you have slain a bear!");
                 }
             }
@@ -139,6 +141,7 @@ public class Hunt extends Entities{
                 deer.life -= 1;
                 if (deer.life <= 0) {
                     gp.neutral[i] = null;
+                    neutralsKilled++;
                     gp.ui.showMessage("you have slain a deer!");
                 }
             }
@@ -189,10 +192,9 @@ public class Hunt extends Entities{
                     gp.obj[index] = null;
                     gp.ui.showMessage("You have found the Skull key!");
                     break;
-                // Further implementation of other objects and entities. If has Key and 5 bear entities and 2 deer entities killed, move to the next level.
                 case "Boat":
                     gp.gameState = gp.dialoueState;
-                    if(hasKey == 1 ){
+                    if(hasKey == 1 && hostilesKilled >= 5 && neutralsKilled >= 2){
                         //gp.ui.showMessage("You have escaped the island!");
                         gp.getSoundManager().stopClip("level1_loop");
                         gp.getSoundManager().playClip("level2_intro", false);
@@ -201,7 +203,7 @@ public class Hunt extends Entities{
                         //gp.ui.getLevelComplete();
                     }
                     else{
-                        gp.ui.Mission = "The is broken. Return to the island and find the key.";
+                        gp.ui.Mission = "The boat is broken, Defeat 5 Bears, 2 Deers and find the Skull Key! [Enter....]";
                     }
                     break;
             }
@@ -211,10 +213,10 @@ public class Hunt extends Entities{
     
 
     public void Image(){
-        walking = new StripAnimation("images//character//Walk.png", 7, 100);
-        idle = new StripAnimation("images//character//Idle.png", 8, 100);
-        die = new StripAnimation("images//character//dieNob.png", 5, 200);
-        attack = new StripAnimation("images//character//attackNob.png", 4, 100);
+        walking = new StripAnimation("images//character//Walk.png", 7, 50);
+        idle = new StripAnimation("images//character//Idle.png", 8, 50);
+        die = new StripAnimation("images//character//dieNob.png", 5, 75);
+        attack = new StripAnimation("images//character//attackNob.png", 4, 90);
     }
 
 
@@ -249,8 +251,8 @@ public class Hunt extends Entities{
         }
     
         g2d.drawImage(image, screenX, screenY, size, size, null);
-        g2d.setColor(Color.RED);
-        g2d.drawRect(screenX, screenY, size, size);
+        //g2d.setColor(Color.RED);
+        //g2d.drawRect(screenX, screenY, size, size);
     }
     
     private BufferedImage rotateImageByDegrees(BufferedImage img, double angle) {
@@ -316,6 +318,14 @@ public class Hunt extends Entities{
 
     public void changeLevel(){
         window.startLevel2();
+    }
+
+    public int hostilesKilled(){
+        return hostilesKilled;
+    }
+
+    public int neutralsKilled(){
+        return neutralsKilled;
     }
     
 }
