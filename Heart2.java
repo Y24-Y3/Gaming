@@ -41,9 +41,9 @@ public class Heart2 {
 
 		dimension = panel.getSize();
 		Random random = new Random();
-		//x = 4174;	
-		x = 4128;
-		y = 270;
+		
+		x = 12046;
+		y = 575;
 		dx = 2;
 
 		this.player = player;
@@ -79,15 +79,11 @@ public class Heart2 {
 
 
 	public Rectangle2D.Double getBounds() {
-		return new Rectangle2D.Double (x, y, XSIZE, YSIZE);
+		return new Rectangle2D.Double (x, y+100, XSIZE, YSIZE);
 	}
 
 
 	public void update() {				
-		x = x + dx;
-
-		if (x < 4064 || x > 4184)
-			dx = dx * -1;
 
 	}
 

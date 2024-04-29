@@ -90,7 +90,7 @@ public class Ramm implements Enemy{
 
 
 	public Rectangle2D.Double getBounds() {
-		return new Rectangle2D.Double (x, y-spriteImage.getHeight(null)+35, spriteImage.getWidth(null), spriteImage.getHeight(null));
+		return new Rectangle2D.Double (x, y-spriteImage.getHeight(null)+75, spriteImage.getWidth(null), spriteImage.getHeight(null));
 	}
 
     public void update() {	

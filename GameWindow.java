@@ -7,6 +7,7 @@ import java.awt.*;
 public class GameWindow extends JFrame implements ActionListener, KeyListener, MouseListener{
 
     //
+    private int level;
     //public HashSet<Integer> directions;
     public boolean[] directions = {false, false, false, false};
 
@@ -44,7 +45,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         setLocation(200, 0);
 
         //directions = new HashSet<>();
-
+        level = 1;
         // User Interface Components
         inventory = new JLabel("Inventory");
         questItems = new JLabel("Quest Items");
@@ -155,18 +156,17 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
             System.exit(0);
         }
         if(e.getSource() == pause){
-            gp.endGameThread();
-            gamePanel.startGame();
-            cardLayout.show(cardPanel, "gamePanel2");
-            //gamePanel.pauseGame();
-
-            // if (command.equals("Pause Game"))
-			// 	pauseB.setText ("Resume");
-			// else
-			// 	pauseB.setText ("Pause Game");
+        
+            if (level == 2) {
+                gamePanel.pauseGame();
+            }
         }
         if(e.getSource() == restart){
-            //gamePanel.restartGame();
+
+            if (level == 2) {
+                gamePanel.startNewGame();
+            }
+            
         }
 
         main.requestFocus();
@@ -268,6 +268,7 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         gamePanel.startGame();
         cardLayout.show(cardPanel, "gamePanel2");
         main.requestFocus();
+        level = 2;
         return;
     }
     

@@ -49,7 +49,7 @@ public class Hunter {
 
 
 
-    public Hunter(JPanel panel, TileMap2 t, BackgroundManager2 b){
+    public Hunter(GamePanel2 panel, TileMap2 t, BackgroundManager2 b){
         //directions = new HashSet<>();
         this.panel = panel;
         tileMap = t;			// tile map on which the player's sprite is displayed
@@ -322,6 +322,7 @@ public class Hunter {
 
         if(health <= 0){
             dead = true;
+            ((GamePanel2) panel).loseGame();
         }
   
         timeElapsed++;

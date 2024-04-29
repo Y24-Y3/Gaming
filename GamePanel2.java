@@ -39,7 +39,7 @@ public class GamePanel2 extends JPanel
 
 	private boolean levelChange;
 	private int level;
-	private boolean gameOver;
+	private boolean gameOver, win;
 
 	public GamePanel2 () {
 
@@ -68,7 +68,7 @@ public class GamePanel2 extends JPanel
 		try {
 			isRunning = true;
 			while (isRunning) {
-				if (!isPaused && !gameOver)
+				if (!isPaused && !gameOver && !win)
 					gameUpdate();
 				gameRender();
 				Thread.sleep (50);	
@@ -98,7 +98,7 @@ public class GamePanel2 extends JPanel
 				System.out.println ("Height of tilemap " + h);
 			}
 			catch (Exception e) {		// no more maps: terminate game
-				gameOver = true;
+				win = true;
 				System.out.println(e);
 				System.out.println("Game Over"); 
 				return;
@@ -143,6 +143,18 @@ public class GamePanel2 extends JPanel
 			Color darken = new Color (0, 0, 0, 125);
 			imageContext.setColor (darken);
 			imageContext.fill (new Rectangle2D.Double (0, 0, 1000, 700));
+			imageContext.setColor(Color.RED); // Set color for "GAME OVER" text
+            imageContext.setFont(imageContext.getFont().deriveFont(50f)); // Set font size
+            imageContext.drawString("GAME OVER", 350, 350); // Adjust position as needed
+		}
+
+		if (win) {
+			Color darken = new Color (0, 0, 0, 125);
+			imageContext.setColor (darken);
+			imageContext.fill (new Rectangle2D.Double (0, 0, 1000, 700));
+			imageContext.setColor(Color.RED); // Set color for "GAME OVER" text
+            imageContext.setFont(imageContext.getFont().deriveFont(50f)); // Set font size
+            imageContext.drawString("YOU WIN!", 350, 350); // Adjust position as needed
 		}
 
 		Graphics2D g2 = (Graphics2D) getGraphics();	// get the graphics context for the panel
@@ -158,6 +170,7 @@ public class GamePanel2 extends JPanel
 			//soundManager.playSound ("background", true);
 
 			gameOver = false;
+			win = false;
 
 			tileManager = new TileMapManager2 (this);
 
@@ -191,6 +204,7 @@ public class GamePanel2 extends JPanel
 			endGame();
 
 			gameOver = false;
+			win = false;
 			level = 1;
 
 			tileManager = new TileMapManager2 (this);
@@ -241,7 +255,7 @@ public class GamePanel2 extends JPanel
 
 	
 	public void moveLeft(boolean[] directions) {
-		if (!gameOver)
+		if (!gameOver || !win)
 			tileMap.moveLeft(directions);
 	}
 
@@ -260,6 +274,10 @@ public class GamePanel2 extends JPanel
 	public void setDirections(boolean[] directions) {
 		if(directions[1] && directions[2]){ directions[1] = false;} // prioritize goinf right over left to avoid bad movement
 		this.directions = directions;
+	}
+
+	public void loseGame(){
+		gameOver = true;
 	}
 
 }
