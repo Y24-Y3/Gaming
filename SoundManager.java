@@ -44,8 +44,8 @@ public class SoundManager {
         // clip = loadClip("sounds//conditions//critical.WAV");
         // clips.put("1hp", clip);
 
-        // clip = loadClip("sounds//conditions//Game-Over.WAV");
-        // clips.put("gameover", clip);
+        clip = loadClip("sounds//conditions//Game-Over.WAV");
+        clips.put("gameover", clip);
 
         // clip = loadClip("sounds//conditions//heal.WAV");
         // clips.put("heal", clip);

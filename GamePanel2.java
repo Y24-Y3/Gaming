@@ -278,6 +278,7 @@ public class GamePanel2 extends JPanel implements Runnable {
 
 	public void loseGame(){
 		gameOver = true;
+		soundManager.playClip("gameover", false);
 	}
 
 }
