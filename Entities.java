@@ -6,8 +6,6 @@ import java.awt.Rectangle;
 public class Entities {
 
     public GamePanel gp;
-    public GameWindow2 gw2;
-
 
     public int Worldx, Worldy;
     public int speed;
@@ -70,6 +68,7 @@ public class Entities {
 
         int size = gp.getTileSize();
         anim = getAnim();
+        
 
         if(Worldx + gp.getTileSize() > gp.player.Worldx - gp.player.screenX &&
             Worldx - gp.getTileSize() < gp.player.Worldx + gp.player.screenX &&
