@@ -461,6 +461,7 @@ public class Hunter {
     public void takeDamage(int x){
         health = health - x;
         isHurting = true;
+        soundManager.playClip("hit", false);
         return;
     }
 

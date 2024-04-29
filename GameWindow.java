@@ -158,18 +158,14 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
         if(e.getSource() == pause){
         
             if (level == 2) {
-                gamePanel.pauseGame();
-            }else{
-                gp.togglePauseState();
+                gamePanel.pauseGame();   
             }
+            
         }
         if(e.getSource() == restart){
 
             if (level == 2) {
                 gamePanel.startNewGame();
-            }
-            else{
-                startLevel2();
             }
             
         }
@@ -201,14 +197,6 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
             directions[0] = true;
 			gamePanel.setDirections(directions);
 		}
-        // else
-		// if (e.getKeyCode() == KeyEvent.VK_UP) {
-		// 	gamePanel.moveUp();
-		// }
-        // else
-		// if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-		// 	gamePanel.moveDown();
-		// }
 		
 	}
 
