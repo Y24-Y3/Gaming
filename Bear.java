@@ -64,6 +64,7 @@ public class Bear extends Entities{
                 direction = "attack";
                 Attackani = attack2;
                 attackPlayer(gp.getPlayer());
+                gp.getSoundManager().playClip("bear", false);
             }
 
             actionCounter = 0;

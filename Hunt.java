@@ -131,6 +131,7 @@ public class Hunt extends Entities{
                     gp.hostile[i] = null;
                     hostilesKilled++;
                     gp.ui.showMessage("you have slain a bear!");
+                    gp.getSoundManager().playClip("hit", false);
                 }
             }
         }
@@ -143,6 +144,7 @@ public class Hunt extends Entities{
                     gp.neutral[i] = null;
                     neutralsKilled++;
                     gp.ui.showMessage("you have slain a deer!");
+                    gp.getSoundManager().playClip("hit", false);
                 }
             }
         }
@@ -167,7 +169,7 @@ public class Hunt extends Entities{
         // Check if the player is within a certain distance from the deer
         int distanceX = Math.abs(Worldx - neutral.Worldx);
         int distanceY = Math.abs(Worldy - neutral.Worldy);
-        int attackRange = gp.getTileSize()+3; // Adjust the attack range as needed
+        int attackRange = gp.getTileSize()+5; // Adjust the attack range as needed
     
         return (distanceX <= attackRange && distanceY <= attackRange);
     }
@@ -191,6 +193,7 @@ public class Hunt extends Entities{
                     hasKey = 1;
                     gp.obj[index] = null;
                     gp.ui.showMessage("You have found the Skull key!");
+                    gp.getSoundManager().playClip("repair", false);
                     break;
                 case "Boat":
                     gp.gameState = gp.dialoueState;
@@ -227,6 +230,7 @@ public class Hunt extends Entities{
     
         if (isDead) {
             image = die.getImage();
+            gp.getSoundManager().playClip("death", false);
         } else {
             switch (direction) {
                 case "up":

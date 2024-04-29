@@ -33,12 +33,12 @@ public class UI {
         this.g2 = g2;
         g2.setFont(font);
         g2.setColor(Color.WHITE);
-        g2.drawString("Time: " + getTime(), 900, 20);
+        g2.drawString("Time: " + getTime(), 870, 20);
         image = gp.getPlayer().getImage();
-        g2.drawImage(image, 940, 30, gp.getTileSize(), gp.getTileSize(), null);
+        g2.drawImage(image, 870, 25, gp.getTileSize(), gp.getTileSize(), null);
         g2.drawString(" X " + gp.getPlayer().getLife(), 900, 70);
-        g2.drawString(" X " + gp.getPlayer().hostilesKilled(), 900, 90);
-        g2.drawString(" X " + gp.getPlayer().neutralsKilled(), 900, 110);
+        g2.drawString(" Bears Killed: " + gp.getPlayer().hostilesKilled(), 870, 90);
+        g2.drawString(" Deers Killed " + gp.getPlayer().neutralsKilled(), 870, 110);
 
         //Title Screen
         if(gp.gameState == gp.getMenuState()){

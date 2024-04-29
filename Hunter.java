@@ -19,7 +19,7 @@ public class Hunter {
     private JPanel panel;
     private int x, y, width, height, dx, dy;
     private Image l2PlayerImage, l2PlayerLeftImage, l2PlayerRightImage, l2PlayerIdleRightImage, l2PlayerIdleLeftImage, l2PlayerShootRightImage, l2PlayerShootLeftImage;
-    private SoundManager2 soundManager;
+    private SoundManager soundManager;
     private Dimension d;
     private Color color;
     private TileMap2 tileMap;
@@ -73,7 +73,7 @@ public class Hunter {
         l2PlayerShootRightImage = ImageManager2.loadImage("images2/character/shootRight50x64.gif");
         l2PlayerShootLeftImage = ImageManager2.loadImage("images2/character/shootLeft50x64.gif");
         l2PlayerImage = l2PlayerIdleRightImage;
-        soundManager = SoundManager2.getInstance();
+        soundManager = SoundManager.getInstance();
 
 
     }
@@ -449,6 +449,7 @@ public class Hunter {
 
      private void shoot() {
 		//pow pow pow
+        soundManager.playClip("shoot", false);
 		Bullet temp = new Bullet(tileMap, lastDirection, this.getX(), this.getY());
 		bullets.add(temp);
 	}

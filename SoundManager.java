@@ -26,20 +26,20 @@ public class SoundManager {
         clip = loadClip("sounds//character//walking//walking_grass.WAV");
         clips.put("walking1", clip);
 
-        // clip = loadClip("sounds//conditions//Hit.WAV");
-        // clips.put("hit", clip);
+        clip = loadClip("sounds//conditions//Hit.WAV");
+        clips.put("hit", clip);
 
         // clip = loadClip("sounds//conditions//intense_loop.WAV");
         // clips.put("critical", clip);
 
-        // clip = loadClip("sounds//conditions//ko.WAV");
-        // clips.put("death", clip);
+        clip = loadClip("sounds//conditions//ko.WAV");
+        clips.put("death", clip);
 
         // clip = loadClip("sounds//conditions//reload.WAV");
         // clips.put("reload", clip);
 
-        // clip = loadClip("sounds//conditions//shoot.WAV");
-        // clips.put("shoot", clip);
+        clip = loadClip("sounds//conditions//shoot.WAV");
+        clips.put("shoot", clip);
 
         // clip = loadClip("sounds//conditions//critical.WAV");
         // clips.put("1hp", clip);
@@ -50,12 +50,12 @@ public class SoundManager {
         // clip = loadClip("sounds//conditions//heal.WAV");
         // clips.put("heal", clip);
 
-        // clip = loadClip("sounds//creatures//Bear.WAV");
-        // clips.put("bear", clip);
+        clip = loadClip("sounds//creatures//Bear.WAV");
+        clips.put("bear", clip);
 
 
-        // clip = loadClip("sounds//Objective//repair.WAV");
-        // clips.put("repair", clip);
+        clip = loadClip("sounds//Objective//repair.WAV");
+        clips.put("repair", clip);
 
         // clip = loadClip("sounds//transition//loop1.WAV");
         // clips.put("transition1", clip);

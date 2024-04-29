@@ -13,10 +13,9 @@ import java.awt.geom.Rectangle2D;
    A component that displays all the game entities
 */
 
-public class GamePanel2 extends JPanel
-		       implements Runnable {
+public class GamePanel2 extends JPanel implements Runnable {
 
-	private SoundManager2 soundManager;
+	private SoundManager soundManager;
 	boolean[] directions = {false, false, false, false};
 
 	private boolean isRunning;
@@ -49,7 +48,7 @@ public class GamePanel2 extends JPanel
 		isAnimPaused = false;
 
 
-		soundManager = SoundManager2.getInstance();
+		soundManager = SoundManager.getInstance();
 
 		image = new BufferedImage (1000, 700, BufferedImage.TYPE_INT_RGB);
 
@@ -86,6 +85,7 @@ public class GamePanel2 extends JPanel
 		if (levelChange) {
 			levelChange = false;
 			tileManager = new TileMapManager2 (this);
+			soundManager.playClip("transition2", true);	// play the transition sound
 
 			try {
 				String filename = "maps2/map" + level + ".txt";
