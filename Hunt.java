@@ -215,11 +215,12 @@ public class Hunt extends Entities{
 
 
     public void draw(Graphics2D g2d){
-        /* g2d.setColor(Color.RED);
-        g2d.fillRect(x, y, gp.tileSize, gp.tileSize); */
         int size = gp.getTileSize() * 2;
 
         // Draw the player
+        if(isDead){
+            die.draw(g2d, screenX, screenY, size, size);
+        }else{
         if(direction == "up"){
             walking.draw(g2d, screenX, screenY, size, size);
         }
@@ -238,8 +239,9 @@ public class Hunt extends Entities{
         else{
             idle.draw(g2d, screenX, screenY,size, size );
         }
-        g2d.setColor(Color.RED);
-        g2d.drawRect(screenX, screenY, size, size);
+    }
+        //g2d.setColor(Color.RED);
+        //g2d.drawRect(screenX, screenY, size, size);
 
     }
 

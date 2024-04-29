@@ -91,5 +91,34 @@ public class Bear extends Entities{
         }
     }
 
+    public void draw(Graphics2D g2d) {
+        int ScreenX = Worldx - gp.player.Worldx + gp.player.screenX;
+        int ScreenY = Worldy - gp.player.Worldy + gp.player.screenY;
+        int size = gp.getTileSize();
+    
+        if (life <= 0) {
+            die.draw(g2d, ScreenX, ScreenY, size, size);
+        } else {
+            // Draw the bear as usual
+            switch (direction) {
+                case "up":
+                    anim.draw(g2d, ScreenX, ScreenY, size, size);
+                    break;
+                case "down":
+                    anim.draw(g2d, ScreenX, ScreenY, size, size);
+                    break;
+                case "left":
+                    anim.draw(g2d, ScreenX, ScreenY, size, size);
+                    break;
+                case "right":
+                    anim.draw(g2d, ScreenX, ScreenY, size, size);
+                    break;
+            }
+    
+            g2d.setColor(Color.RED);
+            g2d.drawRect(ScreenX, ScreenY, size, size);
+        }
+    }
+
     
     }
