@@ -10,6 +10,7 @@ public class Hunter {
     private static final int DX = 10;	// amount of X pixels to move in one keystroke
     private static final int DY = 16;	// amount of Y pixels to move in one keystroke
     private static final int TILE_SIZE = 32;
+    private static final int hurtDuration = 8;
 
     //public HashSet<Integer> directions;
     int lastDirection;
@@ -42,6 +43,9 @@ public class Hunter {
 
     private int health;
     private boolean dead;
+    private boolean isHurting;
+    private Image l2PlayerImageHurt;
+    private int hurtTimer;
 
 
 
@@ -60,6 +64,7 @@ public class Hunter {
         bullets = new LinkedList();
         health = 10;
         dead = false;
+        isHurting = false;
 
         l2PlayerLeftImage = ImageManager2.loadImage("images2/character/walkLeft50x64.gif");
         l2PlayerRightImage = ImageManager2.loadImage("images2/character/walkRight50x64.gif");
@@ -390,6 +395,15 @@ public class Hunter {
 				bullets.remove(bullet);
 			}
 		}
+
+        l2PlayerImageHurt = ImageManager2.tintImage(l2PlayerImage, Color.RED);
+        if (isHurting) {
+            hurtTimer++;
+            if (hurtTimer >= hurtDuration) {
+                isHurting = false;
+                hurtTimer = 0; // Reset the timer
+            }
+        }
      }
 
      public void moveUp () {
@@ -425,7 +439,11 @@ public class Hunter {
      }
 
      public Image getImage() {
-        return l2PlayerImage;
+        if (isHurting) {
+            return l2PlayerImageHurt;
+        } else {
+            return l2PlayerImage;
+        }
      }
 
      private void shoot() {
@@ -440,6 +458,7 @@ public class Hunter {
 
     public void takeDamage(int x){
         health = health - x;
+        isHurting = true;
         return;
     }
 

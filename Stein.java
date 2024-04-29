@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -12,6 +13,8 @@ public class Stein implements Enemy{
 	private static final int YSIZE = 64;		// height of the image
 	//private static final int DX = 2;		// amount of pixels to move in one update
 	private static final int YPOS = 150;		// vertical position of the image
+    private static final int ATTACK_COOLDOWN_THRESHOLD = 8;
+    private static final int hurtDuration = 8;
 
 	private int x;
 	private int y;
@@ -30,9 +33,13 @@ public class Stein implements Enemy{
     private Image spriteRightImageAttack;
     int lastDirection;
     boolean gapClosed;
-    private boolean dead;
+    private boolean dead, attacking;
 	private int health;
 	private LinkedList bullets;
+    private int attackCooldown;
+    private boolean isHurting;
+    private Image spriteHurtImage;
+    private int hurtTimer;
 
 	//Graphics2D g2;
 
@@ -61,7 +68,10 @@ public class Stein implements Enemy{
         lastDirection = 2;
         gapClosed = false;
         dead = false;
+        attacking = false;
+        attackCooldown = 0;
 		health = 10;
+        isHurting = false;
         bullets = player.getBullets();
 		spriteLeftImageWalk = ImageManager2.loadImage("images2/stein/walkLeft60x100.gif");
 	    spriteRightImageWalk = ImageManager2.loadImage("images2/stein/walkRight60x100.gif");
@@ -99,7 +109,7 @@ public class Stein implements Enemy{
 		return new Rectangle2D.Double (x, y+32, spriteImage.getWidth(null), spriteImage.getHeight(null));
 	}
 
-    public void update() {	
+    public void update() {
 
         if(health <= 0){
 			dead = true;
@@ -112,16 +122,20 @@ public class Stein implements Enemy{
 			lastDirection = 2;
 		}
 
-		count++;
+		if (attackCooldown > 0) {
+            attackCooldown--;
+        }
 
         double distance = Math.sqrt(Math.pow(player.getX() - getX(), 2) + Math.pow(player.getY() - getY(), 2));
 
         if(distance < 80 && lastDirection == 2){ //attack range
                 spriteImage = spriteRightImageAttack;
+                attacking = true;
         }else if(distance < 50 && lastDirection == 1){
             spriteImage = spriteLeftImageAttack;
+            attacking = true;
         }else if(distance < 400){// pursue range
-
+            attacking = false;
             if(lastDirection == 1){
                 Point tilePos = collidesWithTile((x-dx), y);
 
@@ -144,7 +158,7 @@ public class Stein implements Enemy{
             } 
 
         }else{// do nothing
-
+            attacking = false;
             if(lastDirection == 1){
                 spriteImage = spriteLeftImageIdle;
             }else{
@@ -161,10 +175,25 @@ public class Stein implements Enemy{
 				health = health - 1;
                 System.out.println("hit -1");
 				bullet.setFired();
+                isHurting = true;
 			}
 		}
 		
-        
+        if(collidesWithPlayer() && attacking && attackCooldown <= 0){
+            player.takeDamage(1);
+            attackCooldown = ATTACK_COOLDOWN_THRESHOLD;
+        }  
+
+
+        spriteHurtImage = ImageManager2.tintImage(spriteImage, Color.RED);
+        if (isHurting) {
+            hurtTimer++;
+            if (hurtTimer >= hurtDuration) {
+                isHurting = false;
+                hurtTimer = 0; // Reset the timer
+            }
+        }
+
     }
 
 
@@ -193,7 +222,11 @@ public class Stein implements Enemy{
 
 
    	public Image getImage() {
-      		return spriteImage;
+        if (isHurting) {
+            return spriteHurtImage;
+        } else {
+            return spriteImage;
+        }
    	}
 
        public Stein clone(){

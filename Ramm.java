@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.Rectangle2D;
@@ -11,6 +12,7 @@ public class Ramm implements Enemy{
 	private static final int YSIZE = 64;		// height of the image
 	//private static final int DX = 2;		// amount of pixels to move in one update
 	private static final int YPOS = 150;		// vertical position of the image
+    private static final int hurtDuration = 8;
 
 	private int x;
 	private int y;
@@ -34,6 +36,9 @@ public class Ramm implements Enemy{
 	int count;
 	private boolean dead;
 	private int health;
+    private boolean isHurting;
+    private Image spriteHurtImage;
+    private int hurtTimer;
 
 
 	public Ramm (TileMap2 map) {  
@@ -55,6 +60,7 @@ public class Ramm implements Enemy{
 		bullets = player.getBullets();
 		dead = false;
 		health = 5;
+        isHurting = false;
 
 		spriteLeftImage = ImageManager2.loadImage("images2/ramm/rammShootLeft100.gif");
 		spriteRightImage = ImageManager2.loadImage("images2/ramm/rammShootRight100.gif");
@@ -130,19 +136,18 @@ public class Ramm implements Enemy{
 				health = health - 1;
 				System.out.println("hit -1");
 				bullet.setFired();
+				isHurting = true;
 			}
 		}
-		//map.setArrowSprites(arrows);
-
-	
-		// boolean shooting;
-		// if (shooting){
-		// 	count++;
-		// 	if(count >2){
-		// 		shooting = false;
-				
-		// 	}
-		// }
+		
+		spriteHurtImage = ImageManager2.tintImage(spriteImage, Color.RED);
+        if (isHurting) {
+            hurtTimer++;
+            if (hurtTimer >= hurtDuration) {
+                isHurting = false;
+                hurtTimer = 0; // Reset the timer
+            }
+        }
     
         
     }
@@ -186,7 +191,11 @@ public class Ramm implements Enemy{
 
 
    	public Image getImage() {
-      		return spriteImage;
+		if (isHurting) {
+            return spriteHurtImage;
+        } else {
+            return spriteImage;
+        }
    	}
 
        public Ramm clone(){
