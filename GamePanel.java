@@ -162,7 +162,6 @@ public class GamePanel extends JPanel implements Runnable{
         }else
         if(gameState == gameOverState){
             // Game Over
-
         }
 
     }
@@ -298,6 +297,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void die(){
         gameState = gameOverState;
+        sm.stopClip("level1_loop");
     }
     
 }
