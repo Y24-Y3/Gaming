@@ -168,9 +168,9 @@ public class GameWindow extends JFrame implements ActionListener, KeyListener, M
             if (level == 2) {
                 gamePanel.startNewGame();
             }
-            // else{
-            //     startLevel2();
-            // }
+            else{
+                startLevel2();
+            }
             
         }
 

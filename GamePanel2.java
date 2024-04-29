@@ -85,7 +85,7 @@ public class GamePanel2 extends JPanel implements Runnable {
 		if (levelChange) {
 			levelChange = false;
 			tileManager = new TileMapManager2 (this);
-			soundManager.playClip("transition2", true);	// play the transition sound
+			
 
 			try {
 				String filename = "maps2/map" + level + ".txt";
@@ -99,6 +99,7 @@ public class GamePanel2 extends JPanel implements Runnable {
 			}
 			catch (Exception e) {		// no more maps: terminate game
 				win = true;
+				soundManager.stopClip("transition2");
 				System.out.println(e);
 				System.out.println("Game Over"); 
 				return;
@@ -171,6 +172,8 @@ public class GamePanel2 extends JPanel implements Runnable {
 
 			gameOver = false;
 			win = false;
+			
+			soundManager.playClip("transition2", true);	// play the transition sound
 
 			tileManager = new TileMapManager2 (this);
 
@@ -207,6 +210,8 @@ public class GamePanel2 extends JPanel implements Runnable {
 			win = false;
 			level = 1;
 
+			
+			soundManager.playClip("transition2", true);	// play the transition sound
 			tileManager = new TileMapManager2 (this);
 
 			try {
@@ -251,6 +256,8 @@ public class GamePanel2 extends JPanel implements Runnable {
 	public void endGame() {					// end the game thread
 		isRunning = false;
 		//soundManager.stopClip ("background");
+		
+		soundManager.stopClip("transition2");
 	}
 
 	
@@ -278,6 +285,7 @@ public class GamePanel2 extends JPanel implements Runnable {
 
 	public void loseGame(){
 		gameOver = true;
+		soundManager.stopClip("transition2");
 	}
 
 }
