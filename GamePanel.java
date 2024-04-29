@@ -36,7 +36,7 @@ public class GamePanel extends JPanel implements Runnable{
 
 
     // Player variables
-    public Hunt player = new Hunt(this, key);
+    public Hunt player;
     public AssertObjects ao = new AssertObjects(this);
     public CollisionChecker cc = new CollisionChecker(this);
     public TileMapManagerHelp tmm = new TileMapManagerHelp(this);
@@ -56,7 +56,8 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     private int FPS = 60;
 
-    public GamePanel(){
+    public GamePanel( GameWindow window){
+
         this.setPreferredSize(new Dimension(getScreenWidth(), getScreenHeight()));
         System.out.println("Screen Width: " + screenWidth + " Screen Height: " + screenHeight);
         this.setDoubleBuffered(true);
@@ -67,6 +68,8 @@ public class GamePanel extends JPanel implements Runnable{
         System.out.println("Get World Col: " + getWorldCol() + " Get World Row: " + getWorldRow());
 
         sm = SoundManager.getInstance();
+
+        player = new Hunt(this, key, window);
     }
     
     public void startGameThread(){

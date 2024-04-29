@@ -12,10 +12,11 @@ public class Hunt extends Entities{
     public  int screenY = 0;
     private int health = 10;
     public int hasKey = 0;
+    GameWindow window;
 
 
 
-    public Hunt(GamePanel gp, KeyHandler key){
+    public Hunt(GamePanel gp, KeyHandler key, GameWindow window){
         super(gp);
 
         this.key = key;
@@ -32,6 +33,7 @@ public class Hunt extends Entities{
 
         boundsX = boundingBox.x;
         boundsY = boundingBox.y;
+        this.window = window;
 
         System.out.println("ScreenX: " + screenX + " ScreenY: " + screenY);
 
@@ -264,5 +266,9 @@ public class Hunt extends Entities{
 
     public Image getImage(){
         return idle.getImage();
+    }
+
+    public void changeLevel(){
+        window.startLevel2();
     }
 }
