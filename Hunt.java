@@ -16,10 +16,11 @@ public class Hunt extends Entities{
     private int health = 10;
     public int life = health;
     public int hasKey = 0;
+    GameWindow window;
 
 
 
-    public Hunt(GamePanel gp, KeyHandler key){
+    public Hunt(GamePanel gp, KeyHandler key, GameWindow window){
         super(gp);
 
         this.key = key;
@@ -36,6 +37,7 @@ public class Hunt extends Entities{
 
         boundsX = boundingBox.x;
         boundsY = boundingBox.y;
+        this.window = window;
 
         System.out.println("ScreenX: " + screenX + " ScreenY: " + screenY);
 
@@ -194,6 +196,7 @@ public class Hunt extends Entities{
                         //gp.ui.showMessage("You have escaped the island!");
                         gp.getSoundManager().stopClip("level1_loop");
                         gp.getSoundManager().playClip("level2_intro", false);
+                        changeLevel();
                         
                         //gp.ui.getLevelComplete();
                     }
@@ -310,4 +313,9 @@ public class Hunt extends Entities{
     public int getLife(){
         return life;
     }
+
+    public void changeLevel(){
+        window.startLevel2();
+    }
+    
 }
