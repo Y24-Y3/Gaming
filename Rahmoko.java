@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D.Double;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class Stein implements Enemy{
+public class Rahmoko implements Enemy{
 
     private static final int XSIZE = 64;		// width of the image
 	private static final int YSIZE = 64;		// height of the image
@@ -50,7 +50,7 @@ public class Stein implements Enemy{
 	int count2;
 
 
-	public Stein (TileMap2 map) {  
+	public Rahmoko (TileMap2 map) {  
         
 		// x = 4128;
 		// y = 270;
@@ -229,7 +229,7 @@ public class Stein implements Enemy{
         }
    	}
 
-       public Stein clone(){
+       public Rahmoko clone(){
         return this;
        }
 
