@@ -156,13 +156,13 @@ public class GamePanel extends JPanel implements Runnable{
                     //cc.checkTile(neutral[i]);
                 } 
             }
-        }
-
+        }else
         if(gameState == pauseState){
             // Pause
-        }
+        }else
         if(gameState == gameOverState){
             // Game Over
+
         }
 
     }
@@ -294,6 +294,10 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
         return;
+    }
+
+    public void die(){
+        gameState = gameOverState;
     }
     
 }

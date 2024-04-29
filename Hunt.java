@@ -54,6 +54,10 @@ public class Hunt extends Entities{
     }
 
     public void update(){
+
+        if(life <=0){
+            gp.die();
+        }
         boolean directionKeyPressed = false; // Flag to track if any direction key is pressed
 
         if(key.up){
